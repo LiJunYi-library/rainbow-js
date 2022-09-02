@@ -1,0 +1,3 @@
+String.fomatter=function (type) {
+  
+}

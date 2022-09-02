@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script type="module">
+    // import './number/NUMBER.js';
+    import { useArray } from './array/ARRAY.js';
+    // import { useDate } from './date/DATE.js';
+   
+    useArray()
+    // useDate()
+    // console.log(Number.fomatter(123456789) );
+
+    let arrs = [
+      {n:'n1',id:1},
+      {n:'n2',id:2},
+      {n:'n3',id:3},
+      {n:'n4',id:4},
+    ]
+
+  let soltArr =  arrs.sortByList( [{dd:4},{dd:3},] , (item,ele)=>  item.id === ele.dd   )
+    
+    
+
+    console.log(soltArr);
+    
+   
+    let arr = [
+      {
+        n: 1, show: true,
+        children: [
+          { n: '1-1', show: false },
+          { n: '1-2', show: true },
+          { n: '1-3', show: true },
+          { n: '1-4', show: false },
+        ],
+        node: [
+          { n: '1-1', show: false },
+          { n: '1-2', show: true },
+          { n: '1-3', show: true },
+          {
+            n: '1-4', show: true, children: [
+              { n: '1-4-1', show: false },
+              { n: '1-4-2', show: true },
+              { n: '1-4-3', show: true },
+              { n: '1-4-4', show: false },
+            ],
+          },
+        ],
+      },
+      { n: 2, show: true },
+      {
+        n: 3, show: true, children: [
+          { n: '3-1', show: false },
+          { n: '3-2', show: true },
+          { n: '3-3', show: true },
+          { n: '3-4', show: false },
+        ],
+      },
+      { n: 4, show: true },
+      { n: 5, show: false },
+    ]
+
+    // arr.recursiveForEach((...arg) => {
+    //   console.log(arg[0], arg[3]);
+    //   // return (arg[0].n === '3-1')
+    // }, ["children", "node"])
+
+    // let res = arr.recursiveFilter((el) => el.show, ["children", "node"])
+    // console.log(res);
+
+    // arr.recursiveUnshift(["children", "node"],  { n: '998', show: true, children:[ { n: '998-1', show: false }] })
+    // console.log(Date.fomatterDate('2022062013:30 uio',"{yyyy}{mm}{dd}{hh}:{ii} uio"));
+
+
+  //   function Pro() {
+  //     return new Promise(rec => {
+  //       setTimeout(() => {
+  //         rec('Listene2');
+  //       }, 2000);
+  //     });
+  //   }
+
+  //  async function names() {
+  //   const res = await  Pro();
+  //     return res;
+  //   }
+
+  //   console.log(names());
+
+
+
+    // console.log(res.flatMap(el=>el.n));
+    // console.log(arr);
+    // let tree = arr.recursiveFindTree((el) => el.n === '1-4-3', ["children", "node"])
+    // console.log(tree);
+
+    // let node = arr.recursiveFind((el) => el.n === '3-2', ["children", "node"])
+    // console.log(node);
+
+    // console.log(arr.recursiveForEach((el) => el.aaa = '3-4', ["children"]));
+
+    // arr.recursiveForEach((el) => el.aaa = '3-4')
+  
+
+
+    // arr.forEach((el, index) => {
+    //   console.log(el, index);
+    //   if (index === 2) return true
+    // })
+
+    // let routers = [
+    //   { "id": 555555, "icon": "el-icon-date", "isShow": true, "select": 1, "text": "每周快报", "path": "/dayNews", "name": "每周快报/每周快报" },
+    //   { "id": 5, "icon": "el-icon-data-line", "isShow": true, "text": "行业分析", "path": "/professionAnaly", "name": "行业分析", "children": [{ "text": "行业趋势", "isShow": true, "path": "/professionAnaly/professionTrend", "name": "行业分析/行业趋势" }, { "text": "类目排行", "isShow": true, "path": "/professionAnaly/classRank", "name": "类目销量/类目排行" }, { "text": "红蓝海市场", "isShow": true, "path": "/professionAnaly/redBlueSeaMarket", "name": "红蓝海市场/红蓝海市场" }, { "text": "属性分析", "isShow": true, "path": "/professionAnaly/attributeAnalyse", "name": "属性分析/属性分析" }, { "text": "用户画像", "isShow": true, "path": "/professionAnaly/userPortrait", "name": "用户画像", "meta": { "tag": "Hot" } }, { "text": "自定义搜索分析", "isShow": true, "path": "/professionAnaly/serach", "name": "自定义搜索分析", "meta": { "tag": "Hot" } }] }, { "id": 8, "icon": "el-icon-monitor", "isShow": true, "text": "品牌分析", "path": "/brandsAnaly", "name": "品牌分析", "children": [{ "text": "品牌排行", "isShow": true, "path": "/brandsAnaly/brandsRank", "name": "品牌分析/品牌排行" }, { "text": "价格段排行", "isShow": true, "path": "/brandsAnaly/priceSegmentRank", "name": "品牌分析/价格段排行" }] }, { "id": 9, "icon": "el-icon-house", "isShow": true, "text": "店铺分析", "path": "/shopsAnaly", "name": "店铺分析", "children": [{ "text": "店铺排行", "isShow": true, "path": "/shopsAnaly/shopsRank", "name": "店铺分析/店铺排行" }, { "text": "飙升店铺", "isShow": true, "path": "/shopsAnaly/riseFastShops", "name": "店铺分析/飙升店铺" }] }, { "id": 10, "icon": "el-icon-goods", "isShow": true, "text": "商品分析", "path": "/goodsAnaly", "name": "商品分析", "children": [{ "text": "热销商品", "isShow": true, "path": "/goodsAnaly/goodsRank", "name": "商品分析/热销商品" }, { "text": "飙升商品", "isShow": true, "path": "/goodsAnaly/riseFastGoods", "name": "商品分析/飙升商品" }] }, { "id": 7, "icon": "el-icon-video-camera", "isShow": true, "text": "竞品监控", "path": "/monitor", "name": "竞品监控", "children": [{ "text": "关键词排名", "isShow": true, "path": "/goodsAnaly/keywordRanking", "name": "关键词排名", "meta": { "tag": "New" } }, { "text": "品牌监控", "isShow": true, "path": "/monitor/brand", "name": "竞品监控/品牌监控" }, { "text": "店铺监控", "isShow": true, "path": "/monitor/shops", "name": "竞品监控/店铺监控" }, { "text": "SKU监控", "isShow": true, "path": "/monitor/goods", "name": "竞品监控/SKU监控" }] }]
+    // console.log(routers);
+    // let indexs = routers.recursiveFindIndex((el) => el.id === 10)
+    // console.log(indexs);
+    // Object.prototype.isEmpty = function () {
+    //   return !Object.keys(this).length
+    // }
+    // let oo = {}
+  </script>
+</body>
+
+</html>

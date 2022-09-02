@@ -1,0 +1,27 @@
+{
+  "name": "@rainbow_ljy/jsapi",
+  "version": "1.0.18",
+  "description": "增加js的一些 api",
+  "main": "index.js",
+  "private": false,
+  "typings": "types/index.d.ts",
+  "scripts": {
+    "test": "jsapi"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lijunyi-library/jsApi.git"
+  },
+  "keywords": [
+    "jsapi"
+  ],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/lijunyi-library/jsApi/issues"
+  },
+  "homepage": "https://github.com/lijunyi-library/jsApi#readme",
+  "__npminstall_done": true,
+  "_from": "@rainbow_ljy/jsapi@1.0.2",
+  "_resolved": "https://registry.npmmirror.com/@rainbow_ljy/jsapi/-/jsapi-1.0.2.tgz"
+}
