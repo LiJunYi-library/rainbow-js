@@ -106,17 +106,29 @@ function useConstructor() {
     return undefined;
   }
 
-
   Array.sortByList = function (list, arr, fun) {
     list.forEach((item) => {
       let sortIndex = arr.findIndex(ele => fun(item, ele));
       item.sortIndex = sortIndex === -1 ? list.length : sortIndex
     });
-    list.sort(function(a, b) {
+    list.sort(function (a, b) {
       return a.sortIndex - b.sortIndex;
     });
     return list
   }
+
+  Array.randomList = function (list) {
+    let random = []
+    let length = list.length
+    for (let nth = 0; nth < length; nth++) {
+      const index = Math.floor(Math.random() * (list.length - 1));
+      random.push(list[index]);
+      list.splice(index, 1);
+    }
+    return random;
+  }
+
+
 
 
 }
@@ -124,6 +136,10 @@ function useConstructor() {
 
 function useArray() {
   useConstructor();
+
+  Array.prototype.randomList = function () {
+    return Array.randomList(this)
+  }
 
   Array.prototype.sortByList = function (arr, fun) {
     return Array.sortByList(this, arr, fun)

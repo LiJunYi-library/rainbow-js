@@ -1,11 +1,15 @@
 declare function useArray(): void
 
+declare function useConstructor(): void
+
 declare class ARRAY extends Array {
   removeIndex(num: number): ARRAY[];
   remove(item: any): ARRAY;
   wipeRepetition(): ARRAY;
   splitIndex(num: number): number[];
   split(num: number): ARRAY[];
+
+  static randomList<T>(list: T[]): T[];
 
   static recursiveFilter(fun: () => Boolean, keys: string[], list: []): ARRAY[];
   recursiveFilter(fun: () => Boolean, keys: string[],): ARRAY[];
@@ -25,4 +29,4 @@ declare class ARRAY extends Array {
     recursive: () => any
   ): ARRAY[];
 }
-export { ARRAY, useArray };
+export { ARRAY, useArray, useConstructor };

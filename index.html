@@ -9,64 +9,106 @@
 </head>
 
 <body>
+
+
+  <script>
+  
+  let list = [{ a: 1 }, { a: 2 }, { a: 3 }, { a: 4 }, { a: 5 }, { a: 6 }, { a: 7 }, { a: 8 },]
+
+  function ast(list, index) {
+  let nth = index < 0 ? list.length + index : index;
+
+  return list[nth]
+}
+
+Array.prototype.ast = function  ( index ){
+  return ast(this,index)
+}
+
+
+console.log(list.ast(1));
+
+  //  let randomList = function (list) {
+  //   let random = []
+  //   let length = list.length
+  //   for (let nth = 0; nth < length; nth++) {
+  //     const index = Math.floor(Math.random() * (list.length - 1));
+  //     random.push(list[index]);
+  //     list.splice(index, 1);
+  //   }
+  //   return random;
+  // }
+
+
+  // console.log(randomList(list));
+
+    
+
+
+
+  </script>
+
+
+
+
   <script type="module">
     // import './number/NUMBER.js';
-    import { useArray } from './array/ARRAY.js';
+    // import { useArray } from './array/ARRAY.js';
     // import { useDate } from './date/DATE.js';
    
-    useArray()
+    // useArray()
     // useDate()
     // console.log(Number.fomatter(123456789) );
 
-    let arrs = [
-      {n:'n1',id:1},
-      {n:'n2',id:2},
-      {n:'n3',id:3},
-      {n:'n4',id:4},
-    ]
+  //   let arrs = [
+  //     {n:'n1',id:1},
+  //     {n:'n2',id:2},
+  //     {n:'n3',id:3},
+  //     {n:'n4',id:4},
+  //   ]
 
-  let soltArr =  arrs.sortByList( [{dd:4},{dd:3},] , (item,ele)=>  item.id === ele.dd   )
+  // let soltArr =  arrs.sortByList( [{dd:4},{dd:3},] , (item,ele)=>  item.id === ele.dd   )
     
     
 
-    console.log(soltArr);
+  //   console.log(soltArr);
     
    
-    let arr = [
-      {
-        n: 1, show: true,
-        children: [
-          { n: '1-1', show: false },
-          { n: '1-2', show: true },
-          { n: '1-3', show: true },
-          { n: '1-4', show: false },
-        ],
-        node: [
-          { n: '1-1', show: false },
-          { n: '1-2', show: true },
-          { n: '1-3', show: true },
-          {
-            n: '1-4', show: true, children: [
-              { n: '1-4-1', show: false },
-              { n: '1-4-2', show: true },
-              { n: '1-4-3', show: true },
-              { n: '1-4-4', show: false },
-            ],
-          },
-        ],
-      },
-      { n: 2, show: true },
-      {
-        n: 3, show: true, children: [
-          { n: '3-1', show: false },
-          { n: '3-2', show: true },
-          { n: '3-3', show: true },
-          { n: '3-4', show: false },
-        ],
-      },
-      { n: 4, show: true },
-      { n: 5, show: false },
-    ]
+  //   let arr = [
+  //     {
+  //       n: 1, show: true,
+  //       children: [
+  //         { n: '1-1', show: false },
+  //         { n: '1-2', show: true },
+  //         { n: '1-3', show: true },
+  //         { n: '1-4', show: false },
+  //       ],
+  //       node: [
+  //         { n: '1-1', show: false },
+  //         { n: '1-2', show: true },
+  //         { n: '1-3', show: true },
+  //         {
+  //           n: '1-4', show: true, children: [
+  //             { n: '1-4-1', show: false },
+  //             { n: '1-4-2', show: true },
+  //             { n: '1-4-3', show: true },
+  //             { n: '1-4-4', show: false },
+  //           ],
+  //         },
+  //       ],
+  //     },
+  //     { n: 2, show: true },
+  //     {
+  //       n: 3, show: true, children: [
+  //         { n: '3-1', show: false },
+  //         { n: '3-2', show: true },
+  //         { n: '3-3', show: true },
+  //         { n: '3-4', show: false },
+  //       ],
+  //     },
+  //     { n: 4, show: true },
+  //     { n: 5, show: false },
+  //   ]
 
     // arr.recursiveForEach((...arg) => {
     //   console.log(arg[0], arg[3]);
