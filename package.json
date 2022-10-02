@@ -1,6 +1,6 @@
 {
   "name": "@rainbow_ljy/jsapi",
-  "version": "1.0.22",
+  "version": "1.0.23",
   "description": "增加js的一些 api",
   "main": "index.js",
   "private": false,

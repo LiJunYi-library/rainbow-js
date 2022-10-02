@@ -50,7 +50,7 @@ export class Queue {
 export function QueuePromise(callBack) {
   var currentQueue, prveQueue;
   var callBack = callBack;
-   
+
   Object.defineProperties(this, {
     then: {
       value: (thenCallBack) => {
@@ -76,6 +76,47 @@ export function QueuePromise(callBack) {
       value: (finalCallBack) => {
         if (prveQueue && prveQueue.loading === true) {
           prveQueue.termination();
+        }
+        currentQueue = new Queue({ callBack, finalCallBack });
+        prveQueue = currentQueue;
+        return currentQueue;
+      }
+    },
+  });
+
+}
+
+
+
+export function AwaitPromise(callBack) {
+  var currentQueue, prveQueue;
+  var callBack = callBack;
+
+  Object.defineProperties(this, {
+    then: {
+      value: (thenCallBack) => {
+        if (prveQueue && prveQueue.loading === true) {
+          return
+        }
+        currentQueue = new Queue({ callBack, thenCallBack });
+        prveQueue = currentQueue;
+        return currentQueue;
+      }
+    },
+    catch: {
+      value: (catchCallBack) => {
+        if (prveQueue && prveQueue.loading === true) {
+          return
+        }
+        currentQueue = new Queue({ callBack, catchCallBack });
+        prveQueue = currentQueue;
+        return currentQueue;
+      }
+    },
+    finally: {
+      value: (finalCallBack) => {
+        if (prveQueue && prveQueue.loading === true) {
+          return
         }
         currentQueue = new Queue({ callBack, finalCallBack });
         prveQueue = currentQueue;
