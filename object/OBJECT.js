@@ -1,6 +1,6 @@
 
 //TODO  这个方法没用到过
-function objectFilter(object = {}, regExp, isDelete) {
+export function objectFilter(object = {}, regExp, isDelete) {
   let o = {};
   for (const key in object) {
     if (object.hasOwnProperty.call(object, key)) {
@@ -15,28 +15,22 @@ function objectFilter(object = {}, regExp, isDelete) {
   return o;
 }
 
-function useConstructor() {
+export function useConstructor() {
   Object.filter = objectFilter
 }
 
-function usePrototype() {
+export function usePrototype() {
   Object.prototype.objectFilter = function (regExp, isDelete) {
     objectFilter(this, regExp, isDelete)
   }
 }
 
-
-
-
-function useObject() {
+export function useObject() {
   Object.prototype.isEmpty = function () {
     return !Object.keys(this).length
   }
 }
 
-
-
-
-
 let OBJECT = Object;
-export { useObject, OBJECT, objectFilter }
+
+export { OBJECT }
