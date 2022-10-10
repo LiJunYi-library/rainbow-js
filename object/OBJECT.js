@@ -15,15 +15,15 @@ export function objectFilter(object = {}, regExp, isDelete) {
   return o;
 }
 
-export function useConstructor() {
-  Object.filter = objectFilter
-}
+// export function useConstructor() {
+//   Object.filter = objectFilter
+// }
 
-export function usePrototype() {
-  Object.prototype.objectFilter = function (regExp, isDelete) {
-    objectFilter(this, regExp, isDelete)
-  }
-}
+// export function usePrototype() {
+//   Object.prototype.objectFilter = function (regExp, isDelete) {
+//     objectFilter(this, regExp, isDelete)
+//   }
+// }
 
 export function useObject() {
   Object.prototype.isEmpty = function () {
