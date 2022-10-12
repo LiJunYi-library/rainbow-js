@@ -156,7 +156,7 @@ function useArray() {
    * 
    */
   Array.prototype.remove = function (item) {
-    let index = this.findIndex(item);
+    let index = this.indexOf(item);
     if (~index) this.splice(index, 1,);
     return this;
   }
