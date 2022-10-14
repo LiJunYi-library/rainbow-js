@@ -11,7 +11,8 @@ function useConstructor() {
       let element = list[index];
       if (fun(element, index, list, parent, layer, roote)) return roote;
       keys.forEach(key => {
-        if (element[key]) Array.recursiveForEach(fun, keys, [...element[key]], recursive, layer, element)
+        let actArr = element[key];
+        if (element[key]) Array.recursiveForEach(fun, keys, actArr, recursive, layer, element)
       });
     }
     return roote;
