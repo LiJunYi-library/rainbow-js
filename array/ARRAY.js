@@ -24,22 +24,35 @@ function useConstructor() {
    * @param {*} list 
    * @returns 
    */
-  Array.recursiveFilter = function (fun, keys = ["children"], list) {
-    let arr = list.filter(fun);
+  Array.recursiveFilter = function (fun, keys = ["children"], list, layer = -1) {
+    layer++;
+    let arr = list.filter((...arg) => fun(...arg, layer));
     arr.forEach(element => {
       keys.forEach(key => {
-        if (element[key]) element[key] = Array.recursiveFilter(fun, keys, [...element[key]])
+        if (element[key]) { element[key] = Array.recursiveFilter(fun, keys, [...element[key]], layer) }
       });
     });
     return arr
   }
 
-  Array.recursiveUnshift = function (keys = ["children"], list, ...vals) {
+  Array.recursiveMap = function (fun, keys = ["children"], list, layer = -1) {
+    layer++;
+    let arr = list.map((...arg) => fun(...arg, layer));
+    arr.forEach(element => {
+      keys.forEach(key => {
+        if (element[key]) { element[key] = Array.recursiveMap(fun, keys, [...element[key]], layer) }
+      });
+    });
+    return arr
+  }
+
+  Array.recursiveUnshift = function (keys = ["children"], list, layer = -1, ...vals) {
+    layer++;
     let arr = [...list];
     list.unshift(...vals);
     arr.forEach(element => {
       keys.forEach(key => {
-        if (element[key]) element[key] = Array.recursiveUnshift(keys, [...element[key]], ...vals)
+        if (element[key]) element[key] = Array.recursiveUnshift(keys, [...element[key]], layer, ...vals)
       });
     });
 
@@ -157,7 +170,7 @@ function useArray() {
    * 
    */
   Array.prototype.remove = function (item) {
-    let index = this.indexOf(item);
+    let index = this.findIndex(item);
     if (~index) this.splice(index, 1,);
     return this;
   }
@@ -195,6 +208,10 @@ function useArray() {
     return Array.recursiveFilter(fun, keys, this)
   }
 
+  Array.prototype.recursiveMap = function (fun, keys = ["children"]) {
+    return Array.recursiveMap(fun, keys, this)
+  }
+
   Array.prototype.recursiveFindTree = function (fun, keys = ["children"]) {
     return Array.recursiveFindTree(fun, keys, this)
   }
@@ -212,7 +229,7 @@ function useArray() {
   }
 
   Array.prototype.recursiveUnshift = function (keys = ["children"], ...values) {
-    return Array.recursiveUnshift(keys, this, ...values);
+    return Array.recursiveUnshift(keys, this, -1, ...values);
   }
 
   if (!Array.prototype.at) {
