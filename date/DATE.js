@@ -17,7 +17,11 @@ function isLeapYear(year) {
   return (year % 4 === 0 && year % 100 !== 0) || year % 400 === 0;
 }
 
+let isUseDate = false
+
 function useDate() {
+  if (isUseDate) return;
+  isUseDate = true;
 
   Date.prototype.isLeapYear = isLeapYear;
 
@@ -75,12 +79,10 @@ function useDate() {
     return this;
   }
 
-
   Date.prototype.setStartMilliseconds = function () {
     this.setMilliseconds(0)
     return this;
   }
-
 
   Date.prototype.setStartSeconds = function () {
     this.setSeconds(0)
@@ -109,7 +111,6 @@ function useDate() {
     this.setAgo({ Date: -  day })
     return this;
   }
-
 
   Date.prototype.setStartMonth = function () {
     this.setMonth(0)
@@ -161,8 +162,7 @@ function useDate() {
     return this;
   }
 
-
-  Date.prototype.fomatter = function (cFormat = '{y}-{m}-{d} {h}:{i}:{s}:{c}') {
+  Date.prototype.formatter = function (cFormat = '{y}-{m}-{d} {h}:{i}:{s}:{c}') {
     const formatObj = {
       y: this.getFullYear(),
       m: this.getMonth() + 1,
@@ -186,6 +186,8 @@ function useDate() {
     return timeStr;
   }
 
+  Date.prototype.fomatter = Date.prototype.formatter;
+
   Date.surplusTime = function (endTime, option) {
     const end = new Date(endTime);
     const now = Date.now();
@@ -201,7 +203,7 @@ function useDate() {
     return `${hours}时${minutes}分${seconds}秒`;
   }
 
-  Date.fomatterDate = function (stringTime, format = '{y}/{m}/{d} {h}:{i}:{s}:{c}') {
+  Date.formatterDate = function (stringTime, format = '{y}/{m}/{d} {h}:{i}:{s}:{c}') {
     const date = new Date();
     if (!stringTime) return date
     let timeObj = {
@@ -213,6 +215,7 @@ function useDate() {
       Seconds: date.getSeconds(),
       Day: date.getDay(),
       Milliseconds: date.getMilliseconds(),
+      Week: null,
     };
     let regExp = [
       { format: 'y', type: 'Year' },
@@ -223,6 +226,7 @@ function useDate() {
       { format: 's', type: 'Seconds' },
       { format: 'c', type: 'Milliseconds' },
       { format: 'a', type: 'Day' },
+      { format: 'w', type: 'Week' },
     ]
     let nth = 0;
     let arr = [];
@@ -257,8 +261,49 @@ function useDate() {
       }
     }
     return date;
-
   }
+
+  Date.fomatterDate = Date.formatterDate;
+
+  Date.prototype.getChineseDay = function () {
+    let d = this.getDay();
+    if (d === 0) d = 7;
+    return d;
+  }
+
+  // TODO 各框架算法不同
+  Date.prototype.setWeek = function (num) {
+    if (typeof num !== "number") return this;
+    this.setStart();
+    // console.log('重置', this.formatter());
+    // console.log('重置', this.getChineseDay());
+    let day = this.getChineseDay();
+    let repairDay = 7 - day;
+    if (day === 1) repairDay = 0;
+    let time = this.getTime();
+    let weekTime = num * 7 * 24 * 60 * 60 * 1000;
+    let t = time + weekTime;
+    this.setTime(t);
+    return this
+  };
+
+  // TODO 各框架算法不同
+  Date.prototype.getWeek = function () {
+    let ct = this.getTime();
+
+    let da = new Date();
+    da.setStart();
+    let tt = da.getTime();
+    let day = da.getChineseDay();
+    let repairDay = 7 - day;
+    if (day === 1) repairDay = 0;
+    let repairT = repairDay * 24 * 60 * 60 * 1000;
+
+    let nth = (ct - tt) / 1000 / 60 / 60 / 24 / 7;
+
+    return Math.floor(nth)
+  };
+
 
 }
 

@@ -53,8 +53,81 @@ console.log(list.ast(1));
 
   <script type="module">
     // import './number/NUMBER.js';
-    // import { useArray } from './array/ARRAY.js';
-    // import { useDate } from './date/DATE.js';
+    import { useArray } from './array/ARRAY.js';
+    import { useDate } from './date/DATE.js';
+    useDate();
+
+
+// function extractDatefunction(stringTime, format = '{y}/{m}/{d} {h}:{i}:{s}:{c}') {
+//   const date = new Date();
+//   if (!stringTime) return date
+//   let timeObj = {
+//     Year: date.getFullYear(),
+//     Month: date.getMonth(),
+//     Date: date.getDate(),
+//     Hours: date.getHours(),
+//     Minutes: date.getMinutes(),
+//     Seconds: date.getSeconds(),
+//     Day: date.getDay(),
+//     Milliseconds: date.getMilliseconds(),
+//     Week: null,
+//   };
+//   let regExp = [
+//     { format: 'y', type: 'Year' },
+//     { format: 'm', type: 'Month' },
+//     { format: 'd', type: 'Date' },
+//     { format: 'h', type: 'Hours' },
+//     { format: 'i', type: 'Minutes' },
+//     { format: 's', type: 'Seconds' },
+//     { format: 'c', type: 'Milliseconds' },
+//     { format: 'a', type: 'Day' },
+//     { format: 'w', type: 'Week' },
+//   ]
+//   let nth = 0;
+//   let arr = [];
+//   let current = {};
+//   for (let index = 0; index < format.length; index++) {
+//     const str = format[index];
+//     if (str === '{') {
+//       arr[0] = index - nth
+//       nth++;
+//     }
+//     if (arr.length && regExp.some(v => v.format === str)) {
+//       current.type = regExp.find(v => v.format === str).type;
+//     }
+//     if (str === '}') {
+//       arr[1] = index - nth;
+//       nth++;
+//       current.value = stringTime.slice(...arr) || 0;
+//       current.slice = arr;
+//       if (current.type === 'Month') timeObj[current.type] = current.value * 1 - 1;
+//       else timeObj[current.type] = current.value * 1;
+//       arr = [];
+//       current = {};
+//     }
+//   }
+//   console.log(timeObj);
+//   return timeObj;
+// }
+
+let ddd =new Date( 1665849600000) 
+console.log(ddd.formatter() );
+console.log(  'wwwww:'  ,  ddd.getWeek() );
+
+console.log( '现在的周'   , new Date( ).getWeek()  );
+// // console.log( new Date( ).setWeek(18)  );
+let ceu =new Date();
+
+console.log( ceu.setDate(1));
+console.log( ceu.getDate());
+
+
+let data =  Date.formatterDate ( '202243','{yyyy}{ww}')
+console.log( data.formatter() );
+
+
+// extractDatefunction('202278','{yyyy}{ww}')
+// extractDatefunction('2022年第8','{yyyy}年第{w}') 
    
     // useArray()
     // useDate()

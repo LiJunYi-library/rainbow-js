@@ -15,8 +15,13 @@ declare class DATE extends Date {
   setStart(parms: string): DATE;
   setAgo(parms: DateOptions): DATE;
   fomatter(parms: string): string;
-  static surplusTime(endTime:number): string;
-  static cruateDate(stringTime:string, format : string): DATE;
+  getChineseDay(): number;
+  setWeek(): DATE;
+  getWeek(): number;
+  static surplusTime(endTime: number): string;
+  static cruateDate(stringTime: string, format: string): DATE;
+  static formatterDate(stringTime: string, format: string): DATE;
+  static fomatterDate(stringTime: string, format: string): DATE;
 }
 
 declare type DateOptions = {
