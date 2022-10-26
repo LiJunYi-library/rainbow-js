@@ -112,6 +112,8 @@ console.log(list.ast(1));
 
 let ddd =new Date( 1665849600000) 
 console.log(ddd.formatter() );
+console.log(ddd.formatter('{y}{w}') );
+console.log(ddd.formatter('{y}年第{w}周') );
 console.log(  'wwwww:'  ,  ddd.getWeek() );
 
 console.log( '现在的周'   , new Date( ).getWeek()  );

@@ -172,8 +172,9 @@ function useDate() {
       s: this.getSeconds(),
       a: this.getDay(),
       c: this.getMilliseconds(),
+      w: this.getWeek(),
     };
-    const timeStr = cFormat.replace(/{(y|m|d|h|i|s|a|c)+}/g, (result, key) => {
+    const timeStr = cFormat.replace(/{(y|m|d|h|i|s|a|c|w)+}/g, (result, key) => {
       let value = formatObj[key];
       if (key === 'a') {
         return ['日', '一', '二', '三', '四', '五', '六'][value];

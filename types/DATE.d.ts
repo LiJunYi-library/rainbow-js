@@ -15,6 +15,7 @@ declare class DATE extends Date {
   setStart(parms: string): DATE;
   setAgo(parms: DateOptions): DATE;
   fomatter(parms: string): string;
+  formatter(parms: string): string;
   getChineseDay(): number;
   setWeek(): DATE;
   getWeek(): number;
