@@ -291,8 +291,10 @@ function useDate() {
   // TODO 各框架算法不同
   Date.prototype.getWeek = function () {
     let ct = this.getTime();
+    let cy = this.getFullYear();
 
     let da = new Date();
+    da.setFullYear(cy);
     da.setStart();
     let tt = da.getTime();
     let day = da.getChineseDay();
@@ -300,8 +302,7 @@ function useDate() {
     if (day === 1) repairDay = 0;
     let repairT = repairDay * 24 * 60 * 60 * 1000;
 
-    let nth = (ct - tt) / 1000 / 60 / 60 / 24 / 7;
-
+    let nth = Math.abs(ct - tt) / 1000 / 60 / 60 / 24 / 7;
     return Math.floor(nth)
   };
 
