@@ -5,24 +5,24 @@ declare class DATE extends Date {
   setEndHours(): DATE;
   setEndDay(): DATE;
   setEndMonth(): DATE;
-  setEnd(parms: string): DATE;
+  setEnd(parms?: string): DATE;
   setStartMilliseconds(): DATE;
   setStartSeconds(): DATE;
   setStartMinutes(): DATE;
   setStartHours(): DATE;
   setStartDay(): DATE;
   setStartMonth(): DATE;
-  setStart(parms: string): DATE;
-  setAgo(parms: DateOptions): DATE;
-  fomatter(parms: string): string;
-  formatter(parms: string): string;
+  setStart(parms?: string): DATE;
+  setAgo(parms?: DateOptions): DATE;
+  fomatter(parms?: string): string;
+  formatter(parms?: string): string;
   getChineseDay(): number;
-  setWeek(): DATE;
+  setWeek(week?: number): DATE;
   getWeek(): number;
-  static surplusTime(endTime: number): string;
-  static cruateDate(stringTime: string, format: string): DATE;
-  static formatterDate(stringTime: string, format: string): DATE;
-  static fomatterDate(stringTime: string, format: string): DATE;
+  static surplusTime(endTime?: number): string;
+  static cruateDate(stringTime?: string, format?: string): DATE;
+  static formatterDate(stringTime?: string, format?: string): DATE;
+  static fomatterDate(stringTime?: string, format?: string): DATE;
 }
 
 declare type DateOptions = {
