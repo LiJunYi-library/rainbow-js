@@ -14,4 +14,6 @@ declare class Queue {
 
 }
 
-export { QueuePromise, Queue };
+declare function mergePageEvent(time?: number): QueuePromise
+
+export { QueuePromise, Queue, mergePageEvent };

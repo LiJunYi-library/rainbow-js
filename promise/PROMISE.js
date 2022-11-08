@@ -86,6 +86,15 @@ export function QueuePromise(callBack) {
 
 }
 
+export function mergePageEvent(time = 0) {
+  return new QueuePromise((resolve, reject) => {
+    setTimeout(() => {
+      resolve(true);
+    }, time);
+  })
+}
+
+
 
 
 export function AwaitPromise(callBack) {
@@ -126,3 +135,5 @@ export function AwaitPromise(callBack) {
   });
 
 }
+
+
