@@ -306,6 +306,41 @@ function useDate() {
     return Math.floor(nth)
   };
 
+  Date.formatTime = function formatTime(time, format = '{y}/{m}/{d} {h}:{i}:{s}:{c}') {
+    const formatObj = {
+      // y: this.getFullYear(),
+      // m: this.getMonth() + 1,
+      d: 0,
+      h: 0,
+      i: 0,
+      s: 0,
+      // c: this.getMilliseconds(),
+      // a: this.getDay(),
+      // w: this.getWeek(),
+      setd() {
+        console.log(formatObj);
+        console.log(formatObj.d);
+        formatObj.d = Math.floor(time / (24 * 60 * 60 * 1000));
+      },
+      seth() {
+        formatObj.h = Math.floor(time / (60 * 60 * 1000) - formatObj.d * 24);
+      },
+      seti() {
+        formatObj.i = Math.floor(time / (60 * 1000) - formatObj.d * 24 * 60 - formatObj.h * 60);
+      },
+      sets() {
+        formatObj.s = Math.floor(time / 1000 - formatObj.d * 86400 - formatObj.h * 3600 - formatObj.i * 60);
+      },
+    };
+    const timeStr = format.replace(/{(y|m|d|h|i|s|a|c|w)+}/g, (result, key) => {
+      let fun = formatObj[`set${key}`];
+      if (fun) fun();
+      let val = formatObj[key];
+      return val || 0;
+    });
+    return timeStr;
+  };
+
 
 }
 

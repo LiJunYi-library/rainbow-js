@@ -143,6 +143,50 @@ function useConstructor() {
   }
 
 
+  Array.obtain = function (list, formatter, verdict) {
+    let value = null;
+    let index;
+    let item;
+    list.forEach((ele, nth) => {
+      if (value === null) {
+        item = ele;
+        index = nth;
+        value = formatter(ele, nth, list);
+        return
+      }
+
+      if (verdict(value, ele, nth, list)) {
+        item = ele;
+        index = nth;
+        value = formatter(ele, nth, list);
+      }
+    });
+    return item;
+  }
+
+  Array.obtainMin = function (list, formatter) {
+    return Array.obtain(list, formatter, (value, item, index, list) => {
+      return formatter(item, index, list) < value
+    })
+  }
+
+  Array.obtainMinLast = function (list, formatter) {
+    return Array.obtain(list, formatter, (value, item, index, list) => {
+      return formatter(item, index, list) <= value
+    })
+  }
+
+  Array.obtainMax = function (list, formatter) {
+    return Array.obtain(list, formatter, (value, item, index, list) => {
+      return formatter(item, index, list) > value
+    })
+  }
+
+  Array.obtainMaxLast = function (list, formatter) {
+    return Array.obtain(list, formatter, (value, item, index, list) => {
+      return formatter(item, index, list) >= value
+    })
+  }
 
 
 }
@@ -170,7 +214,7 @@ function useArray() {
    * 
    */
   Array.prototype.remove = function (item) {
-    let index = this.findIndex(item);
+    let index = this.findIndex((el) => el === item);
     if (~index) this.splice(index, 1,);
     return this;
   }
@@ -239,6 +283,25 @@ function useArray() {
     }
   }
   //
+  Array.prototype.obtain = function (formatter, verdict) {
+    return Array.obtain(this, formatter, verdict)
+  }
+
+  Array.prototype.obtainMin = function (formatter) {
+    return Array.obtainMin(this, formatter)
+  }
+
+  Array.prototype.obtainMinLast = function (formatter) {
+    return Array.obtainMinLast(this, formatter)
+  }
+
+  Array.prototype.obtainMax = function (formatter) {
+    return Array.obtainMax(this, formatter)
+  }
+
+  Array.prototype.obtainMaxLast = function (formatter) {
+    return Array.obtainMaxLast(this, formatter)
+  }
 
 
 }

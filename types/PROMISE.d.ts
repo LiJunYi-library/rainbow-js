@@ -1,6 +1,6 @@
 
 
-declare class QueuePromise {
+export declare class QueuePromise {
   constructor(callBack: (
     resolve: (res: any) => void,
     reject: (res: any) => void,
@@ -10,10 +10,13 @@ declare class QueuePromise {
   finally(res: any): QueuePromise
 }
 
-declare class Queue {
+export declare class Queue {
 
 }
 
-declare function mergePageEvent(time?: number): QueuePromise
+export declare function mergeEvent(time?: number): QueuePromise
 
-export { QueuePromise, Queue, mergePageEvent };
+/**
+ * 废弃
+ */
+export declare function mergePageEvent(time?: number): QueuePromise

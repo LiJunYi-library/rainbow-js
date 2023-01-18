@@ -6,4 +6,5 @@ export * from './promise/PROMISE.js'
 export * from './proxy/PROXY.js'
 export * from './regExp/REGEXP.js'
 export * from './string/STRING.js'
-
+export * from './timer/TIMER.js'
+export * from  './browser/index.js'

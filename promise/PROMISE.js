@@ -94,6 +94,14 @@ export function mergePageEvent(time = 0) {
   })
 }
 
+export function mergeEvent(time = 0) {
+  return new QueuePromise((resolve, reject) => {
+    setTimeout(() => {
+      resolve(true);
+    }, time);
+  })
+}
+
 
 
 
