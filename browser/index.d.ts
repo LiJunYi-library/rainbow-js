@@ -1,4 +1,7 @@
 
+declare type ResizeObserverEntry = any
+declare type ResizeObserver = any
+
 export declare type R_resizeObserverProps = {
   isOnce?: boolean,
   isMerge?: boolean,

@@ -9,24 +9,54 @@
 </head>
 
 <body>
+  <script>
+    class Adapter{
+      data = [];
+        
+      values = []
+
+      value = null
+
+
+      setValue(item){
+           this.value = item
+      }  
+
+      pushValue(item){
+         this.values.push(item)
+      }
+
+      removeValue(item){
+           this.values.filter(el=>el!==item)     
+      }
+
+      
+
+
+    }
+
+    console.log(new Adapter());
+
+
+  </script>
 
 
   <script>
   
-  let list = [{ a: 1 }, { a: 2 }, { a: 3 }, { a: 4 }, { a: 5 }, { a: 6 }, { a: 7 }, { a: 8 },]
+//   let list = [{ a: 1 }, { a: 2 }, { a: 3 }, { a: 4 }, { a: 5 }, { a: 6 }, { a: 7 }, { a: 8 },]
 
-  function ast(list, index) {
-  let nth = index < 0 ? list.length + index : index;
+//   function ast(list, index) {
+//   let nth = index < 0 ? list.length + index : index;
 
-  return list[nth]
-}
+//   return list[nth]
+// }
 
-Array.prototype.ast = function  ( index ){
-  return ast(this,index)
-}
+// Array.prototype.ast = function  ( index ){
+//   return ast(this,index)
+// }
 
 
-console.log(list.ast(1));
+// console.log(list.ast(1));
 
   //  let randomList = function (list) {
   //   let random = []
@@ -53,11 +83,11 @@ console.log(list.ast(1));
 
   <script type="module">
     // import './number/NUMBER.js';
-    import { useArray } from './array/ARRAY.js';
-    import { useDate } from './date/DATE.js';
-    useDate();
+  //   import { useArray } from './array/ARRAY.js';
+  //   import { useDate } from './date/DATE.js';
+  //   useDate();
 
-   console.log('ppppppppp', Date.formatTime(365000));
+  //  console.log('ppppppppp', Date.formatTime(365000));
 
 
 // function extractDatefunction(stringTime, format = '{y}/{m}/{d} {h}:{i}:{s}:{c}') {
@@ -112,22 +142,22 @@ console.log(list.ast(1));
 //   return timeObj;
 // }
 
-let ddd =new Date( 1665849600000) 
-console.log(ddd.formatter() );
-console.log(ddd.formatter('{y}{w}') );
-console.log(ddd.formatter('{y}年第{w}周') );
-console.log(  'wwwww:'  ,  ddd.getWeek() );
+// let ddd =new Date( 1665849600000) 
+// console.log(ddd.formatter() );
+// console.log(ddd.formatter('{y}{w}') );
+// console.log(ddd.formatter('{y}年第{w}周') );
+// console.log(  'wwwww:'  ,  ddd.getWeek() );
 
-console.log( '现在的周'   , new Date( ).getWeek()  );
-// // console.log( new Date( ).setWeek(18)  );
-let ceu =new Date();
+// console.log( '现在的周'   , new Date( ).getWeek()  );
+// // // console.log( new Date( ).setWeek(18)  );
+// let ceu =new Date();
 
-console.log( ceu.setDate(1));
-console.log( ceu.getDate());
+// console.log( ceu.setDate(1));
+// console.log( ceu.getDate());
 
 
-let data =  Date.formatterDate ( '202243','{yyyy}{ww}')
-console.log( data.formatter() );
+// let data =  Date.formatterDate ( '202243','{yyyy}{ww}')
+// console.log( data.formatter() );
 
 
 // extractDatefunction('202278','{yyyy}{ww}')
