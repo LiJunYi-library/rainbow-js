@@ -95,7 +95,7 @@ export function mergePageEvent(time = 0) {
 }
 
 export function mergeEvent(time = 0) {
-  return new QueuePromise((resolve, reject) => {
+  return new QueueFuture((resolve, reject) => {
     setTimeout(() => {
       resolve(true);
     }, time);
@@ -105,43 +105,222 @@ export function mergeEvent(time = 0) {
 
 
 
-export function AwaitPromise(callBack) {
-  var currentQueue, prveQueue;
-  var callBack = callBack;
+export function Future(callBack) {
+  let thenCallBack,
+    catchCallBack,
+    finalCallBack,
+    abortCallBack,
+    loading,
+    data;
 
-  Object.defineProperties(this, {
-    then: {
-      value: (thenCallBack) => {
-        if (prveQueue && prveQueue.loading === true) {
-          return
-        }
-        currentQueue = new Queue({ callBack, thenCallBack });
-        prveQueue = currentQueue;
-        return currentQueue;
-      }
-    },
-    catch: {
-      value: (catchCallBack) => {
-        if (prveQueue && prveQueue.loading === true) {
-          return
-        }
-        currentQueue = new Queue({ callBack, catchCallBack });
-        prveQueue = currentQueue;
-        return currentQueue;
-      }
-    },
-    finally: {
-      value: (finalCallBack) => {
-        if (prveQueue && prveQueue.loading === true) {
-          return
-        }
-        currentQueue = new Queue({ callBack, finalCallBack });
-        prveQueue = currentQueue;
-        return currentQueue;
-      }
-    },
-  });
+  loading = true
+
+  function resolve(...arg) {
+    if (loading === false) return;
+    if (thenCallBack) data = thenCallBack(...arg);
+    if (finalCallBack) finalCallBack(...arg);
+    loading = false;
+  }
+
+  function reject(...arg) {
+    if (loading === false) return;
+    console.error(JSON.stringify(arg));
+    if (catchCallBack) data = catchCallBack(...arg);
+    if (finalCallBack) finalCallBack(...arg);
+    loading = false;
+  }
+
+  function cancel(cb) {
+    cancelCallBack = cb
+  }
+
+  this.termination = (...arg) => {
+    loading = false;
+    if (abortCallBack) abortCallBack(...arg);
+    if (cancelCallBack) cancelCallBack();
+  }
+
+  if (callBack) callBack(resolve.bind(this), reject.bind(this), cancel.bind(this));
+
+  this.getLoading = () => loading
+
+  this.then = (cb) => {
+    thenCallBack = cb;
+    return this;
+  }
+
+  this.catch = (cb) => {
+    catchCallBack = cb;
+    return this;
+  }
+
+  this.finally = (cb) => {
+    finalCallBack = cb;
+    return this;
+  }
+
+  this.abort = (cb) => {
+    abortCallBack = cb;
+    return this;
+  }
 
 }
 
+export function queueFutureApply(cb) {
+  let method = cb
+  method.prve = null
+  method.current = null
+  return new Proxy(method, {
+    apply(target, context, argumentsList = []) {
+      if (method.prve && method.prve.getLoading()) method.prve.termination();
+      method.current = target.apply(context, argumentsList);
+      if (!(method.current instanceof Future)) {
+        console.error(method.name + ' return value is not Future');
+      }
+      method.prve = method.current;
+      return method.current
+    },
+  });
+}
 
+export function QueueFuture(callBack) {
+  let current, prve;
+  this.then = null;
+  this.catch = null;
+  this.finally = null;
+  this.abort = null;
+  let methods = ['then', 'catch', 'finally', 'abort'];
+  let properties = methods.reduce((add, key, index) => {
+    add[key] = {
+      value: (CB) => {
+        if (prve && prve.getLoading()) prve.termination();
+        current = new Future(callBack)[key](CB);
+        prve = current;
+        return current;
+      }
+    }
+    return add
+  }, {})
+  Object.defineProperties(this, properties);
+}
+
+export function awaitFutureApply(cb) {
+  let method = cb
+  method.prve = null
+  method.current = null
+
+  method.then = (cb) => method
+  method.catch = (cb) => method
+  method.finally = (cb) => method
+  method.abort = (cb) => {
+    method.current = new Future().abort(cb)
+    method.current.termination()
+    return method.current
+  }
+
+  return new Proxy(method, {
+    apply(target, context, argumentsList = []) {
+
+      if (method.prve && method.prve.getLoading()) {
+        return method
+      }
+
+      method.current = target.apply(context, argumentsList);
+      if (!(method.current instanceof Future)) {
+        console.error(method.name + ' return value is not Future');
+      }
+      method.prve = method.current;
+      return method.current
+    },
+  });
+}
+
+export function AwaitFuture(callBack) {
+  let current, prve;
+  this.then = null;
+  this.catch = null;
+  this.finally = null;
+  this.abort = null;
+  let methods = ['then', 'catch', 'finally', 'abort'];
+  let properties = methods.reduce((add, key, index) => {
+    add[key] = {
+      value: (CB) => {
+        if (prve && prve.getLoading()) {
+          if (key === 'abort') {
+            current = new Future()[key](CB);
+            current.termination();
+            return current;
+          }
+          return this;
+        }
+        current = new Future(callBack)[key](CB);
+        prve = current;
+        return current;
+      }
+    }
+    return add
+  }, {})
+  Object.defineProperties(this, properties);
+}
+
+export function mergeQueueFutureApply(methods, bListener, thenCB, catchCB, abortCB) {
+  let margeEvent = queueFutureApply((promise) => new Future((rev, rej) => promise.then(rev).catch(rej)))
+
+  let listener = (promise, ...arg) => {
+    margeEvent(promise)
+      .then(async (data) => {
+        if (thenCB) thenCB(data, ...arg)
+      }).abort((data) => {
+        if (abortCB) abortCB(data, ...arg)
+      }).catch((data) => {
+        if (catchCB) catchCB(data, ...arg)
+      })
+  }
+
+  this.bind = () => {
+    methods.forEach(method => {
+      method.addOnApplyListener(bListener)
+      method.addAfterApplyListener(listener)
+    });
+    return this
+  }
+
+  this.destroy = () => {
+    methods.forEach(method => {
+      method.removeOnApplyListener(bListener)
+      method.removeAfterApplyListener(listener)
+    });
+    return this
+  }
+}
+
+export function mergeAwaitFutureApply(methods, bListener, thenCB, catchCB, abortCB) {
+  let margeEvent = awaitFutureApply((promise) => new Future((rev, rej) => promise.then(rev).catch(rej)))
+
+  let listener = (promise, ...arg) => {
+    margeEvent(promise)
+      .then(async (data) => {
+        if (thenCB) thenCB(data, ...arg)
+      }).abort((data) => {
+        if (abortCB) abortCB(data, ...arg)
+      }).catch((data) => {
+        if (catchCB) catchCB(data, ...arg)
+      })
+  }
+
+  this.bind = () => {
+    methods.forEach(method => {
+      method.addOnApplyListener(bListener)
+      method.addAfterApplyListener(listener)
+    });
+    return this
+  }
+
+  this.destroy = () => {
+    methods.forEach(method => {
+      method.removeOnApplyListener(bListener)
+      method.removeAfterApplyListener(listener)
+    });
+    return this
+  }
+}

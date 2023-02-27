@@ -1,6 +1,6 @@
 export * from './ARRAY'
 export * from './DATE'
 export * from './OBJECT'
-export * from './PROMISE'
+export * from '../promise/PROMISE'
 export * from '../proxy/PROXY'
 export * from '../browser/index'
