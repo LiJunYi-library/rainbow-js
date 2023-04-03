@@ -25,6 +25,12 @@ function useDate() {
 
   Date.prototype.isLeapYear = isLeapYear;
 
+  Date.prototype.getMaxDayOfMonth = function (month) {
+    const years = isLeapYear(this.getFullYear()) ? year29 : year28;
+    let m = month || this.getMonth()
+    return years[m]
+  }
+
   Date.prototype.setEndMilliseconds = function () {
     this.setMilliseconds(999)
     return this;
@@ -189,6 +195,31 @@ function useDate() {
 
   Date.prototype.fomatter = Date.prototype.formatter;
 
+  Date.prototype.format = function (cFormat = '{yyyy}-{mm}-{dd} {hh}:{ii}:{ss}:{c}') {
+    const formatObj = {
+      yyyy: this.getFullYear(),
+      mm: this.getMonth() + 1,
+      dd: this.getDate(),
+      hh: this.getHours(),
+      ii: this.getMinutes(),
+      ss: this.getSeconds(),
+      a: this.getDay(),
+      c: this.getMilliseconds(),
+      w: this.getWeek(),
+    };
+    const timeStr = cFormat.replace(/{(yyyy|mm|dd|hh|ii|ss|a|c|w)+}/g, (result, key) => {
+      let value = formatObj[key];
+      if (key === 'a') {
+        return ['日', '一', '二', '三', '四', '五', '六'][value];
+      }
+      if (result.length > 0 && value < 10) {
+        value = `0${value}`;
+      }
+      return value || 0;
+    });
+    return timeStr;
+  }
+
   Date.surplusTime = function (endTime, option) {
     const end = new Date(endTime);
     const now = Date.now();
@@ -209,7 +240,6 @@ function useDate() {
     if (!stringTime) return date
     let timeObj = {
       Year: date.getFullYear(),
-      Month: date.getMonth(),
       Date: date.getDate(),
       Hours: date.getHours(),
       Minutes: date.getMinutes(),
@@ -217,17 +247,18 @@ function useDate() {
       Day: date.getDay(),
       Milliseconds: date.getMilliseconds(),
       Week: null,
+      Month: date.getMonth(),
     };
     let regExp = [
-      { format: 'y', type: 'Year' },
-      { format: 'm', type: 'Month' },
-      { format: 'd', type: 'Date' },
-      { format: 'h', type: 'Hours' },
-      { format: 'i', type: 'Minutes' },
-      { format: 's', type: 'Seconds' },
-      { format: 'c', type: 'Milliseconds' },
-      { format: 'a', type: 'Day' },
-      { format: 'w', type: 'Week' },
+      { format: 'y', type: 'Year', def: 0 },
+      { format: 'm', type: 'Month', def: 0 },
+      { format: 'd', type: 'Date', def: 1 },
+      { format: 'h', type: 'Hours', def: 0 },
+      { format: 'i', type: 'Minutes', def: 0 },
+      { format: 's', type: 'Seconds', def: 0 },
+      { format: 'c', type: 'Milliseconds', def: 0 },
+      { format: 'a', type: 'Day', def: 0 },
+      { format: 'w', type: 'Week', def: 0 },
     ]
     let nth = 0;
     let arr = [];
@@ -239,12 +270,15 @@ function useDate() {
         nth++;
       }
       if (arr.length && regExp.some(v => v.format === str)) {
-        current.type = regExp.find(v => v.format === str).type;
+        let reg = regExp.find(v => v.format === str)
+        current.type = reg.type;
+        current.def = reg.def;
       }
       if (str === '}') {
         arr[1] = index - nth;
         nth++;
-        current.value = stringTime.slice(...arr) || 0;
+        // console.log(current);
+        current.value = stringTime.slice(...arr) || current.def;
         current.slice = arr;
         if (current.type === 'Month') timeObj[current.type] = current.value * 1 - 1;
         else timeObj[current.type] = current.value * 1;
@@ -252,9 +286,14 @@ function useDate() {
         current = {};
       }
     }
+    // console.log(timeObj.Date);
+    let maxDate = date.getMaxDayOfMonth(timeObj.Month)
+    if (timeObj.Date > maxDate) timeObj.Date = maxDate
+    // console.log(timeObj);
     for (const key in timeObj) {
       if (Object.hasOwnProperty.call(timeObj, key)) {
         try {
+          // console.log('date set' + key, timeObj[key]);
           date['set' + key](timeObj[key]);
         } catch (error) {
 
@@ -318,8 +357,8 @@ function useDate() {
       // a: this.getDay(),
       // w: this.getWeek(),
       setd() {
-        console.log(formatObj);
-        console.log(formatObj.d);
+        // console.log(formatObj);
+        // console.log(formatObj.d);
         formatObj.d = Math.floor(time / (24 * 60 * 60 * 1000));
       },
       seth() {
