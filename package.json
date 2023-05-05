@@ -1,6 +1,6 @@
 {
   "name": "@rainbow_ljy/jsapi",
-  "version": "1.0.33",
+  "version": "1.0.34",
   "description": "增加js的一些 api",
   "main": "index.js",
   "private": false,
@@ -23,5 +23,9 @@
   "homepage": "https://github.com/lijunyi-library/jsApi#readme",
   "__npminstall_done": true,
   "_from": "@rainbow_ljy/jsapi@1.0.2",
-  "_resolved": "https://registry.npmmirror.com/@rainbow_ljy/jsapi/-/jsapi-1.0.2.tgz"
+  "_resolved": "https://registry.npmmirror.com/@rainbow_ljy/jsapi/-/jsapi-1.0.2.tgz",
+  "devDependencies": {
+    "webpack": "^5.82.0",
+    "webpack-cli": "^5.0.2"
+  }
 }
