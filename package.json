@@ -1,31 +1,18 @@
 {
-  "name": "@rainbow_ljy/jsapi",
-  "version": "1.0.34",
+  "name": "@rainbow_ljy/rainbow-js",   
+  "version": "1.0.50",
   "description": "增加js的一些 api",
   "main": "index.js",
   "private": false,
-  "typings": "types/index.d.ts",
   "scripts": {
-    "test": "jsapi"
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/lijunyi-library/jsApi.git"
+    "url": "git+https://github.com/lijunyi-library/rainbow-js.git" 
   },
-  "keywords": [
-    "jsapi"
-  ],
+  "keywords": [],
   "author": "",
   "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/lijunyi-library/jsApi/issues"
-  },
-  "homepage": "https://github.com/lijunyi-library/jsApi#readme",
-  "__npminstall_done": true,
-  "_from": "@rainbow_ljy/jsapi@1.0.2",
-  "_resolved": "https://registry.npmmirror.com/@rainbow_ljy/jsapi/-/jsapi-1.0.2.tgz",
-  "devDependencies": {
-    "webpack": "^5.82.0",
-    "webpack-cli": "^5.0.2"
-  }
+  "git-checks": false
 }

@@ -1,4 +1,4 @@
-export * from './array/ARRAY.js'
+export * from './package/array/ARRAY.js'
 export * from './date/DATE.js'
 export * from './number/NUMBER.js'
 export * from './object/OBJECT.js'
