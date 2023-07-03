@@ -246,8 +246,8 @@ function useDate() {
       Seconds: date.getSeconds(),
       Day: date.getDay(),
       Milliseconds: date.getMilliseconds(),
-      Week: null,
       Month: date.getMonth(),
+      Week: null,
     };
     let regExp = [
       { format: 'y', type: 'Year', def: 0 },
@@ -300,6 +300,7 @@ function useDate() {
         }
       }
     }
+    console.log(date.toDateString());
     return date;
   }
 
@@ -321,7 +322,7 @@ function useDate() {
     let repairDay = 7 - day;
     if (day === 1) repairDay = 0;
     let time = this.getTime();
-    let weekTime = num * 7 * 24 * 60 * 60 * 1000;
+    let weekTime = num * 7 * 24 * 60 * 60 * 1000 -1;
     let t = time + weekTime;
     this.setTime(t);
     return this
@@ -342,7 +343,7 @@ function useDate() {
     let repairT = repairDay * 24 * 60 * 60 * 1000;
 
     let nth = Math.abs(ct - tt) / 1000 / 60 / 60 / 24 / 7;
-    return Math.floor(nth)
+    return Math.ceil(nth)
   };
 
   Date.formatTime = function formatTime(time, format = '{y}/{m}/{d} {h}:{i}:{s}:{c}') {

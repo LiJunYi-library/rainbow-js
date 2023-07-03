@@ -1,4 +1,9 @@
 
+let OBJECT = Object;
+
+export { OBJECT }
+
+
 //TODO  这个方法没用到过
 export function objectFilter(object = {}, regExp, isDelete) {
   let o = {};
@@ -31,6 +36,45 @@ export function useObject() {
   }
 }
 
-let OBJECT = Object;
 
-export { OBJECT }
+
+
+export function merge(target = {}, source = {}) {
+  for (const key in source) {
+    if (Object.hasOwnProperty.call(source, key)) {
+      const targetEle = target[key];
+      const sourceEle = source[key];
+      // console.log('key', key);
+      // console.log('targetEle', targetEle);
+      // console.log('sourceEle', sourceEle);
+      // if (key === 'series') {
+      //   console.log('key', key);
+      //   console.log('targetEle', targetEle);
+      //   console.log('sourceEle', sourceEle);
+      // }
+      (() => {
+        if (!sourceEle) {
+          target[key] = sourceEle
+          return
+        }
+
+        if (typeof sourceEle !== 'object') {
+          target[key] = sourceEle
+          return
+        }
+
+        if (typeof sourceEle === 'object' && !targetEle) {
+          target[key] = sourceEle
+          return
+        }
+
+        if (typeof targetEle === 'object' && typeof sourceEle === 'object') {
+          merge(targetEle, sourceEle)
+        }
+
+      })()
+
+    }
+  }
+  return target
+}
