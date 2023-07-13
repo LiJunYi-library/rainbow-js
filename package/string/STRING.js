@@ -1,3 +1,0 @@
-String.fomatter=function (type) {
-  
-}

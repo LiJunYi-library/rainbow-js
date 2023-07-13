@@ -1,7 +1,7 @@
-import { mergeEvent } from '../promise/PROMISE'
+import { mergeEvent } from '../promise'
 
 export function r_resizeObserver(htmlNode, callBack, props = {}) {
-  let {
+  const {
     isOnce = false,
     isMerge = false,
     mergeTime = 60,
@@ -9,7 +9,7 @@ export function r_resizeObserver(htmlNode, callBack, props = {}) {
   if (!htmlNode) return console.error('htmlNode is necessary')
   let timer;
   if (isMerge) timer = mergeEvent(mergeTime); 
-  let resizeObserver = new ResizeObserver(async (...arg) => {
+  const resizeObserver = new ResizeObserver(async (...arg) => {
     if (timer) await timer;
     callBack(...arg)
     if (isOnce) resizeObserver.disconnect();

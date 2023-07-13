@@ -12,7 +12,7 @@ export function apply(func, target) {
   };
   method.removeOnApplyListener = (fun) => {
     if (!method.onApplyListener) return;
-    const index = method.onApplyListener.findIndex(el => el === fun);
+    const index = method.onApplyListener.findIndex((el) => el === fun);
     if (index !== -1) method.onApplyListener.splice(index, 1);
   };
   method.addAfterApplyListener = (fun) => {
@@ -21,7 +21,7 @@ export function apply(func, target) {
   };
   method.removeAfterApplyListener = (fun) => {
     if (!method.afterApplyListener) return;
-    const index = method.afterApplyListener.findIndex(el => el === fun);
+    const index = method.afterApplyListener.findIndex((el) => el === fun);
     if (index !== -1) method.afterApplyListener.splice(index, 1);
   };
   return new Proxy(method, {
@@ -34,7 +34,8 @@ export function apply(func, target) {
       }
       if (thisTarget.lock === true) return;
       const res = thisTarget.apply(thisArg, argumentsList);
-      if (thisTarget.afterApply) thisTarget.afterApply(res, thisArg, argumentsList);
+      if (thisTarget.afterApply)
+        thisTarget.afterApply(res, thisArg, argumentsList);
       if (thisTarget.afterApplyListener) {
         thisTarget.afterApplyListener.forEach((fun) => {
           fun(res, thisTarget, thisArg, argumentsList);
@@ -45,15 +46,12 @@ export function apply(func, target) {
   });
 }
 
-let applay = apply;
-
-export { applay }
-
 export function applyed(CB, ctx) {
-  const method = CB;
-  if (ctx) method = function (...params) {
-    return CB.call(ctx, ...params);
-  };
+  let method = CB;
+  if (ctx)
+    method = function (...params) {
+      return CB.call(ctx, ...params);
+    };
   method.lock = false;
   method.onApplyListener = [];
   method.afterApplyListener = [];
@@ -63,7 +61,7 @@ export function applyed(CB, ctx) {
   };
 
   method.removeOnApplyListener = (fun) => {
-    const index = method.onApplyListener.findIndex(el => el === fun);
+    const index = method.onApplyListener.findIndex((el) => el === fun);
     if (index !== -1) method.onApplyListener.splice(index, 1);
   };
 
@@ -72,21 +70,21 @@ export function applyed(CB, ctx) {
   };
 
   method.removeAfterApplyListener = (fun) => {
-    const index = method.afterApplyListener.findIndex(el => el === fun);
+    const index = method.afterApplyListener.findIndex((el) => el === fun);
     if (index !== -1) method.afterApplyListener.splice(index, 1);
   };
 
   return new Proxy(method, {
     apply(target, context, args = []) {
       if (target.onApply) {
-        let bool = target.onApply(...args, context)
-        if (bool === false) return bool
+        const bool = target.onApply(...args, context);
+        if (bool === false) return bool;
       }
 
       for (let ind = 0; ind < target.onApplyListener.length; ind++) {
         const fun = target.onApplyListener[ind];
-        let bool = fun(...args, context)
-        if (bool === false) return bool
+        const bool = fun(...args, context);
+        if (bool === false) return bool;
       }
 
       const res = target.apply(context, args);
@@ -95,7 +93,7 @@ export function applyed(CB, ctx) {
 
       for (let ind = 0; ind < target.afterApplyListener.length; ind++) {
         const fun = target.afterApplyListener[ind];
-        fun(res, ...args, context)
+        fun(res, ...args, context);
       }
 
       return res;
@@ -103,15 +101,10 @@ export function applyed(CB, ctx) {
   });
 }
 
+export const applay = apply;
 
+const RProxy = {
+  apply,
+};
 
-
-
-
-
-
-
-
-
-
-
+export default RProxy

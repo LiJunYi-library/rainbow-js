@@ -8,10 +8,10 @@ function useConstructor() {
     layer++;
     if (recursive && recursive(list, parent, layer, roote)) return roote;
     for (let index = 0; index < list.length; index++) {
-      let element = list[index];
+      const element = list[index];
       if (fun) if (fun(element, index, list, parent, layer, roote)) return roote;
       keys.forEach(key => {
-        let actArr = element[key];
+        const actArr = element[key];
         if (element[key]) Array.recursiveForEach(fun, keys, actArr, recursive, layer, element)
       });
     }
@@ -26,7 +26,7 @@ function useConstructor() {
    */
   Array.recursiveFilter = function (fun, keys = ["children"], list, layer = -1) {
     layer++;
-    let arr = list.filter((...arg) => fun(...arg, layer));
+    const arr = list.filter((...arg) => fun(...arg, layer));
     arr.forEach(element => {
       keys.forEach(key => {
         if (element[key]) { element[key] = Array.recursiveFilter(fun, keys, [...element[key]], layer) }
@@ -37,7 +37,7 @@ function useConstructor() {
 
   Array.recursiveMap = function (fun, keys = ["children"], list, layer = -1) {
     layer++;
-    let arr = list.map((...arg) => fun(...arg, layer));
+    const arr = list.map((...arg) => fun(...arg, layer));
     arr.forEach(element => {
       keys.forEach(key => {
         if (element[key]) { element[key] = Array.recursiveMap(fun, keys, [...element[key]], layer) }
@@ -48,7 +48,7 @@ function useConstructor() {
 
   Array.recursiveUnshift = function (keys = ["children"], list, layer = -1, ...vals) {
     layer++;
-    let arr = [...list];
+    const arr = [...list];
     list.unshift(...vals);
     arr.forEach(element => {
       keys.forEach(key => {
@@ -96,7 +96,7 @@ function useConstructor() {
       for (let nth = 0; nth < keys.length; nth++) {
         const key = keys[nth];
         if (element[key]) {
-          let node = Array.recursiveFind(fun, keys, [...element[key]]);
+          const node = Array.recursiveFind(fun, keys, [...element[key]]);
           if (node) return node;
         }
       }
@@ -122,7 +122,7 @@ function useConstructor() {
 
   Array.sortByList = function (list, arr, fun) {
     list.forEach((item) => {
-      let sortIndex = arr.findIndex(ele => fun(item, ele));
+      const sortIndex = arr.findIndex(ele => fun(item, ele));
       item.sortIndex = sortIndex === -1 ? list.length : sortIndex
     });
     list.sort(function (a, b) {
@@ -132,8 +132,8 @@ function useConstructor() {
   }
 
   Array.randomList = function (list) {
-    let random = []
-    let length = list.length
+    const random = []
+    const length = list.length
     for (let nth = 0; nth < length; nth++) {
       const index = Math.floor(Math.random() * (list.length - 1));
       random.push(list[index]);
@@ -214,7 +214,7 @@ function useArray() {
    * 
    */
   Array.prototype.remove = function (item) {
-    let index = this.findIndex((el) => el === item);
+    const index = this.findIndex((el) => el === item);
     if (~index) this.splice(index, 1,);
     return this;
   }
@@ -224,10 +224,10 @@ function useArray() {
   }
 
   Array.prototype.splitIndex = function (num) {
-    let arr = []
+    const arr = []
     for (let index = 0; index < this.length; index += num) {
-      let ar = []
-      let max = index + num > this.length ? this.length : index + num;
+      const ar = []
+      const max = index + num > this.length ? this.length : index + num;
       for (let j = index; j < max; j++) {
         ar.push(j)
       }
@@ -237,10 +237,10 @@ function useArray() {
   }
 
   Array.prototype.split = function (num) {
-    let arr = []
+    const arr = []
     for (let index = 0; index < this.length; index += num) {
-      let max = index + num > this.length ? this.length : index + num;
-      let ar = this.slice(index, max)
+      const max = index + num > this.length ? this.length : index + num;
+      const ar = this.slice(index, max)
       arr.push(ar)
     }
     return arr;
@@ -278,7 +278,7 @@ function useArray() {
 
   if (!Array.prototype.at) {
     Array.prototype.at = function (index) {
-      let nth = index < 0 ? this.length + index : index;
+      const nth = index < 0 ? this.length + index : index;
       return this[nth]
     }
   }
@@ -306,6 +306,6 @@ function useArray() {
 
 }
 
-let ARRAY = Array;
+const ARRAY = Array;
 
 export { useArray, useConstructor, ARRAY, }

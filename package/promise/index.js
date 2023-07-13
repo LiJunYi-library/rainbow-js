@@ -48,8 +48,7 @@ export class Queue {
 }
 
 export function QueuePromise(callBack) {
-  var currentQueue, prveQueue;
-  var callBack = callBack;
+  let currentQueue, prveQueue;
 
   Object.defineProperties(this, {
     then: {
@@ -102,14 +101,12 @@ export function mergeEvent(time = 0) {
   })
 }
 
-
-
-
 export function Future(callBack) {
   let thenCallBack,
     catchCallBack,
     finalCallBack,
     abortCallBack,
+    cancelCallBack,
     loading,
     data;
 
@@ -167,7 +164,7 @@ export function Future(callBack) {
 }
 
 export function queueFutureApply(cb) {
-  let method = cb
+  const method = cb
   method.prve = null
   method.current = null
   return new Proxy(method, {
@@ -189,8 +186,8 @@ export function QueueFuture(callBack) {
   this.catch = null;
   this.finally = null;
   this.abort = null;
-  let methods = ['then', 'catch', 'finally', 'abort'];
-  let properties = methods.reduce((add, key, index) => {
+  const methods = ['then', 'catch', 'finally', 'abort'];
+  const properties = methods.reduce((add, key, index) => {
     add[key] = {
       value: (CB) => {
         if (prve && prve.getLoading()) prve.termination();
@@ -205,7 +202,7 @@ export function QueueFuture(callBack) {
 }
 
 export function awaitFutureApply(cb) {
-  let method = cb
+  const method = cb
   method.prve = null
   method.current = null
 
@@ -241,8 +238,8 @@ export function AwaitFuture(callBack) {
   this.catch = null;
   this.finally = null;
   this.abort = null;
-  let methods = ['then', 'catch', 'finally', 'abort'];
-  let properties = methods.reduce((add, key, index) => {
+  const methods = ['then', 'catch', 'finally', 'abort'];
+  const properties = methods.reduce((add, key, index) => {
     add[key] = {
       value: (CB) => {
         if (prve && prve.getLoading()) {
@@ -264,9 +261,9 @@ export function AwaitFuture(callBack) {
 }
 
 export function mergeQueueFutureApply(methods, bListener, thenCB, catchCB, abortCB) {
-  let margeEvent = queueFutureApply((promise) => new Future((rev, rej) => promise.then(rev).catch(rej)))
+  const margeEvent = queueFutureApply((promise) => new Future((rev, rej) => promise.then(rev).catch(rej)))
 
-  let listener = (promise, ...arg) => {
+  const listener = (promise, ...arg) => {
     margeEvent(promise)
       .then(async (data) => {
         if (thenCB) thenCB(data, ...arg)
@@ -295,9 +292,9 @@ export function mergeQueueFutureApply(methods, bListener, thenCB, catchCB, abort
 }
 
 export function mergeAwaitFutureApply(methods, bListener, thenCB, catchCB, abortCB) {
-  let margeEvent = awaitFutureApply((promise) => new Future((rev, rej) => promise.then(rev).catch(rej)))
+  const margeEvent = awaitFutureApply((promise) => new Future((rev, rej) => promise.then(rev).catch(rej)))
 
-  let listener = (promise, ...arg) => {
+  const listener = (promise, ...arg) => {
     margeEvent(promise)
       .then(async (data) => {
         if (thenCB) thenCB(data, ...arg)
@@ -324,3 +321,11 @@ export function mergeAwaitFutureApply(methods, bListener, thenCB, catchCB, abort
     return this
   }
 }
+
+export default class PROMISE {}
+
+PROMISE.Queue = Queue
+PROMISE.QueuePromise = QueuePromise
+PROMISE.mergeEvent = mergeEvent
+PROMISE.Future = Future
+PROMISE.QueueFuture = QueueFuture
