@@ -1,23 +1,34 @@
 const testArr = [
-  { num: 33, tt: "奇" },
-  { num: 44, tt: "偶" },
-  { num: 11, tt: "奇***" },
-  { num: 99, tt: "奇***" },
+  // { num: 33, tt: "奇" },
+  // { num: 44, tt: "偶" },
+  // { num: 11, tt: "奇***" },
+  // { num: 99, tt: "奇***" },
+  // { num: 22, tt: "偶" },
+  // { num: 77, tt: "奇" },
+  // { num: 88, tt: "偶" },
+  // { num: 99, tt: "奇----" },
+  // { num: 55, tt: "奇" },
+  // { num: 11, tt: "奇----" },
+  // { num: 66, tt: "偶" },
+
+  { num: 11, tt: "奇" },
   { num: 22, tt: "偶" },
-  { num: 77, tt: "奇" },
-  { num: 88, tt: "偶" },
-  { num: 99, tt: "奇----" },
+  { num: 33, tt: "奇***" },
+  { num: 44, tt: "偶***" },
   { num: 55, tt: "奇" },
-  { num: 11, tt: "奇----" },
   { num: 66, tt: "偶" },
+  { num: 77, tt: "奇" },
+  { num: 88, tt: "偶----" },
+  { num: 99, tt: "奇" },
 ];
 
+//循环
 export function arrayLoop(num, cb) {
   for (let index = 0; index < num; index++) {
     if (cb(index) === false) return;
   }
 }
-
+//循环创建
 export function arrayLoopMap(num, cb) {
   const arr = [];
   for (let index = 0; index < num; index++) {
@@ -25,7 +36,7 @@ export function arrayLoopMap(num, cb) {
   }
   return arr;
 }
-
+//冒泡查找
 export function arrayBubble(list = [], formatter, verdict) {
   let value = null;
   let index;
@@ -46,7 +57,7 @@ export function arrayBubble(list = [], formatter, verdict) {
   });
   return item;
 }
-
+//冒泡查找最小
 export function arrayBubbleMin(list = [], formatter) {
   return arrayBubble(
     list,
@@ -54,7 +65,7 @@ export function arrayBubbleMin(list = [], formatter) {
     (value, item, index, list) => formatter(item, index, list) < value
   );
 }
-
+//冒泡倒数查找最小
 export function arrayBubbleLastMin(list = [], formatter) {
   return arrayBubble(
     list,
@@ -62,7 +73,7 @@ export function arrayBubbleLastMin(list = [], formatter) {
     (value, item, index, list) => formatter(item, index, list) <= value
   );
 }
-
+//冒泡查找最大
 export function arrayBubbleMax(list = [], formatter) {
   return arrayBubble(
     list,
@@ -70,7 +81,7 @@ export function arrayBubbleMax(list = [], formatter) {
     (value, item, index, list) => formatter(item, index, list) > value
   );
 }
-
+//冒泡倒数查找最大
 export function arrayBubbleLastMax(list = [], formatter) {
   return arrayBubble(
     list,
@@ -99,7 +110,7 @@ export function arrayRemoveLast(list = [], item) {
   return list;
 }
 
-// 删除数组中的所有item 改变数组
+// 删除数组中的所有 相同的 item 改变数组
 export function arrayRemoves(list = [], item) {
   const sames = list.filter((el) => el === item);
   sames.forEach((el) => {
@@ -108,6 +119,7 @@ export function arrayRemoves(list = [], item) {
   return list;
 }
 
+// 切割数组的index
 export function arraySplitIndex(list = [], num) {
   const arr = [];
   for (let index = 0; index < list.length; index += num) {
@@ -121,6 +133,7 @@ export function arraySplitIndex(list = [], num) {
   return arr;
 }
 
+// 切割数组
 export function arraySplit(list = [], num) {
   const arr = [];
   for (let index = 0; index < list.length; index += num) {
@@ -131,20 +144,22 @@ export function arraySplit(list = [], num) {
   return arr;
 }
 
+// 数组 根据某个属性 去重
 export function arrayWipeRepetition(list = [], formatter) {
   if (!formatter) return [...new Set(list)];
   const map = new Map();
   return list.filter(
-    (item) =>
-      !map.has(formatter(item).toString()) &&
-      map.set(formatter(item).toString())
+    (item, index) =>
+      !map.has(formatter(item, index).toString()) &&
+      map.set(formatter(item, index).toString())
   );
 }
 
+// 数组 根据某个属性 去重 从后面
 export function arrayWipeRepetitionLast(list = [], formatter) {
   if (!formatter) return [...new Set(list)];
   const map = {};
-  list.forEach((item) => (map[formatter(item)] = item));
+  list.forEach((item, index) => (map[formatter(item, index)] = item));
   const arr = [];
   for (const key in map) {
     if (Object.hasOwnProperty.call(map, key)) {
@@ -155,6 +170,7 @@ export function arrayWipeRepetitionLast(list = [], formatter) {
   return arr;
 }
 
+// 数组提取相同
 export function arrayExtractSame(list = [], formatter) {
   const map = {};
   list.forEach((item) => {
@@ -171,7 +187,8 @@ export function arrayExtractSame(list = [], formatter) {
   return arr.flat();
 }
 
-export function sortByList(list, arr, formatter) {
+// 数组排序 根据另一个数组的属性
+export function arraySortByList(list, arr, formatter) {
   list.forEach((item) => {
     const sortIndex = arr.findIndex((ele) => formatter(item, ele));
     item.sortIndex = sortIndex === -1 ? list.length : sortIndex;
@@ -179,5 +196,16 @@ export function sortByList(list, arr, formatter) {
   list.sort(function (a, b) {
     return a.sortIndex - b.sortIndex;
   });
+  return list;
+}
+
+// 数组打乱
+export function arrayRandom(list) {
+  const length = list.length;
+  for (let nth = 0; nth < length; nth++) {
+    const index = Math.floor(Math.random() * (list.length - 1));
+    list.push(list[index]);
+    list.splice(index, 1);
+  }
   return list;
 }

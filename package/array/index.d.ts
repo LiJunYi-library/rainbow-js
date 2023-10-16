@@ -34,9 +34,42 @@ export declare function arrayBubbleLastMax<T>(
   formatter: (item: T, index: number, list: T[]) => unknown
 ): T;
 
+export declare function arrayRemoveIndex<T>(list: T[], num: number): T[];
 
+export declare function arrayRemove<T>(list: T[], item: T): T[];
 
-// export declare function findMin<T>(
-//   list: T[],
-//   formatter: (item: T, index: number, list: T[]) => any
-// ): T;
+export declare function arrayRemoveLast<T>(list: T[], item: T): T[];
+
+export declare function arrayRemoves<T>(list: T[], item: T): T[];
+
+export declare function arraySplitIndex<T>(list: T[], num: number): number[][];
+
+export declare function arraySplit<T>(list: T[], num: number): T[][];
+
+export declare function arrayWipeRepetition<T>(
+  list: T[],
+  formatter: (item: T, index: number) => unknown
+): T[];
+
+export declare function arrayWipeRepetitionLast<T>(
+  list: T[],
+  formatter: (item: T, index: number) => unknown
+): T[];
+
+export declare function arrayWipeRepetitionLast<T>(
+  list: T[],
+  formatter: (item: T, index: number) => unknown
+): T[];
+
+export declare function arrayExtractSame<T>(
+  list: T[],
+  formatter: (item: T, index: number) => unknown
+): T[];
+
+export declare function arraySortByList<T, H>(
+  list: T[],
+  arr: H[],
+  formatter: (item: T, ele: H) => boolean
+): T[];
+
+export declare function arrayRandom<T>(list: T[]): T[];

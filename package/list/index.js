@@ -1,5 +1,3 @@
-import { stringUpperFirstCase } from "../string";
-
 export function createObserve(keys = [], obse = {}) {
   const obj = {};
 
@@ -57,9 +55,6 @@ class Promise {
   }
 }
 Promise.defaultProps = {};
-console.log(new Promise());
-console.log("");
-console.log("");
 
 const selectProps = {
   selectType: "radio", //'multi' 'radio'
@@ -97,7 +92,6 @@ class Radio {
     this.index = index;
     this.label = formatterLabel(item);
     this.value = formatterValue(item);
-    // console.log("radioPrototype onSelect", this);
   }
 
   setValue() {
@@ -120,10 +114,6 @@ class Radio {
     //
   }
 }
-
-console.log(new Radio());
-console.log("");
-console.log("");
 
 export class List extends Radio {
   constructor(props = List.defaultProps) {
@@ -148,7 +138,6 @@ export class List extends Radio {
 
     // this.data = props.data;
     // this.list = this.data;
-    console.log(props.data, this);
     // Object.defineProperties(this.constructor.prototype, {
     //   config: {
     //     value: config,
@@ -221,8 +210,6 @@ export class List extends Radio {
   }
 
   empty() {
-    console.log("empty", this);
-
     this.list.splice(0, 5);
     // new this.constructor(this.config);
   }

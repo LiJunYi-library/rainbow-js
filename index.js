@@ -1,13 +1,16 @@
-export * from './package/array/ARRAY.js'
-export * from './package/date/DATE.js'
-export * from './package/number/NUMBER.js'
-export * from './package/regExp/REGEXP.js'
-export * from './package/timer/TIMER.js'
-export * from  './package/browser/index.js'
-///
-export * from './package/proxy/index.js'
-export * from './package/promise/index.js'
-export * from './package/array/index.js'
-export * from './package/string/index.js'
-export * from './package/object'
-export * from './package/list'
+
+export * from "./package/browser/index.js";
+//
+export * from "./package/promise/index.js";
+//
+export * from "./package/list";
+export * from "./package/proxy";
+//
+export * from "./package/array";
+export * from "./package/function";
+export * from "./package/date";
+export * from "./package/object";
+export * from "./package/string";
+export * from "./package/timer";
+export * from "./package/regExp";
+export * from "./package/number";
