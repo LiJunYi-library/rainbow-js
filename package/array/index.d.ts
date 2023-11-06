@@ -36,6 +36,9 @@ export declare function arrayBubbleLastMax<T>(
 
 export declare function arrayRemoveIndex<T>(list: T[], num: number): T[];
 
+/**
+ * 删除数组中第一个找到的item 改变数组
+ */
 export declare function arrayRemove<T>(list: T[], item: T): T[];
 
 export declare function arrayRemoveLast<T>(list: T[], item: T): T[];
