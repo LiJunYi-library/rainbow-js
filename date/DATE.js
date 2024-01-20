@@ -277,7 +277,6 @@ function useDate() {
       if (str === '}') {
         arr[1] = index - nth;
         nth++;
-        // console.log(current);
         current.value = stringTime.slice(...arr) || current.def;
         current.slice = arr;
         if (current.type === 'Month') timeObj[current.type] = current.value * 1 - 1;
@@ -286,21 +285,17 @@ function useDate() {
         current = {};
       }
     }
-    // console.log(timeObj.Date);
     let maxDate = date.getMaxDayOfMonth(timeObj.Month)
     if (timeObj.Date > maxDate) timeObj.Date = maxDate
-    // console.log(timeObj);
     for (const key in timeObj) {
       if (Object.hasOwnProperty.call(timeObj, key)) {
         try {
-          // console.log('date set' + key, timeObj[key]);
           date['set' + key](timeObj[key]);
         } catch (error) {
 
         }
       }
     }
-    console.log(date.toDateString());
     return date;
   }
 
@@ -316,8 +311,6 @@ function useDate() {
   Date.prototype.setWeek = function (num) {
     if (typeof num !== "number") return this;
     this.setStart();
-    // console.log('重置', this.formatter());
-    // console.log('重置', this.getChineseDay());
     let day = this.getChineseDay();
     let repairDay = 7 - day;
     if (day === 1) repairDay = 0;
@@ -343,6 +336,7 @@ function useDate() {
     let repairT = repairDay * 24 * 60 * 60 * 1000;
 
     let nth = Math.abs(ct - tt) / 1000 / 60 / 60 / 24 / 7;
+    console.log(nth);
     return Math.ceil(nth)
   };
 
@@ -358,8 +352,6 @@ function useDate() {
       // a: this.getDay(),
       // w: this.getWeek(),
       setd() {
-        // console.log(formatObj);
-        // console.log(formatObj.d);
         formatObj.d = Math.floor(time / (24 * 60 * 60 * 1000));
       },
       seth() {
