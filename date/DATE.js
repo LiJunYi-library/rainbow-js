@@ -336,7 +336,6 @@ function useDate() {
     let repairT = repairDay * 24 * 60 * 60 * 1000;
 
     let nth = Math.abs(ct - tt) / 1000 / 60 / 60 / 24 / 7;
-    console.log(nth);
     return Math.ceil(nth)
   };
 
