@@ -98,14 +98,14 @@ export function arrayRemoveIndex(list = [], num) {
   return list;
 }
 
-// 删除数组中第一个找到的item 改变数组
+// 删除数组中第一个找到的item 不改变数组
 export function arrayRemove(list = [], item) {
   const index = list.findIndex((el) => el === item);
   if (~index) list.splice(index, 1);
   return list;
 }
 
-// 删除数组中最后一个找到的item  改变数组
+// 删除数组中最后一个找到的item  不改变数组
 export function arrayRemoveLast(list = [], item) {
   const index = list.findLastIndex((el) => el === item);
   if (~index) list.splice(index, 1);
@@ -221,4 +221,23 @@ export function arrayInvokeFuns(...args) {
     const fun = fmt(item);
     fun(...arg);
   });
+}
+
+/* 事件派发 */
+export function arrayEvents() {
+  const events = [];
+
+  function push(eventCB) {
+    events.push(eventCB);
+  }
+
+  function remove(eventCB) {
+    arrayRemove(events, eventCB);
+  }
+
+  function invoke(...args) {
+    arrayInvokeFuns(events, ...args);
+  }
+
+  return { events, push, remove, invoke };
 }

@@ -77,14 +77,19 @@ export declare function arraySortByList<T, H>(
 
 export declare function arrayRandom<T>(list: T[]): T[];
 
-
-export declare function arrayInvokeFuns<T>(list: T[], ...arg: any): void;
+export declare function arrayInvokeFuns<T>(list: T[], ...arg: unknown[]): void;
 
 export declare function arrayInvokeFuns<T>(
   list: T[],
   formatter: (item: T) => unknown,
-  ...arg: any
+  ...arg: unknown[]
 ): void;
+
+export declare function arrayEvents(): {
+  push: (eventCB: void) => void;
+  remove: (eventCB: void) => void;
+  invoke: (...arg: unknown[]) => void;
+};
 
 // 模仿sql查询  //
 export declare function WHERE(compare: any, val: any): boolean;
