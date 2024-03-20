@@ -1,4 +1,4 @@
-export function createOverload(overloadCB) {
+export function createOverload(overloadCB, verifyObjectType = true) {
   const overloads = {};
 
   function fun(...arg) {
@@ -6,7 +6,9 @@ export function createOverload(overloadCB) {
       let t;
       const type = Object.prototype.toString.call(el);
       t = type.replace(/(\[object )([^\]]*?)(\])/, "$2");
-      if (type === "[object Object]") t = el.constructor.name;
+      if (type === "[object Object]" && verifyObjectType) {
+        t = el.constructor.name;
+      }
       add = add + t;
       return add;
     }, "");
@@ -14,7 +16,8 @@ export function createOverload(overloadCB) {
     try {
       res = overloads[key].call(this, ...arg);
     } catch (error) {
-      console.error("函数重载失败", error);
+      console.error("函数重载失败");
+      console.error(error);
     }
     return res;
   }
@@ -56,3 +59,6 @@ export function createOverload(overloadCB) {
 // getUrls(1);
 // getUrls("sssssssssssss");
 // getUrls("sssssssssssss", []);
+
+
+export const isFunction = (val) => typeof val === "function";

@@ -19,7 +19,7 @@ export function recursiveForEach(list, formatter = fmt, fun, recursive, layer = 
   layer++;
   if (recursive && recursive(list, parent, layer, roote)) return roote;
   for (let index = 0; index < list.length; index++) {
-    let element = list[index];
+    const element = list[index];
     if (fun(element, index, list, parent, layer, roote)) return roote;
     keys.forEach(key => {
       if (element[key]) Array.recursiveForEach(fun, keys, [...element[key]], recursive, layer, element)

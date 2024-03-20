@@ -22,6 +22,8 @@ const testArr = [
   { num: 99, tt: "奇" },
 ];
 
+export * from "./sql";
+
 //循环
 export function arrayLoop(num, cb) {
   for (let index = 0; index < num; index++) {
@@ -208,4 +210,15 @@ export function arrayRandom(list) {
     list.splice(index, 1);
   }
   return list;
+}
+
+// 触发数组方法
+export function arrayInvokeFuns(...args) {
+  const [list, formatter, ...arg] = args;
+  let fmt = (item) => item;
+  if (formatter instanceof Function) fmt = formatter;
+  list.forEach((item) => {
+    const fun = fmt(item);
+    fun(...arg);
+  });
 }

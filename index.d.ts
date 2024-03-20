@@ -1,8 +1,4 @@
-////
-
 export * from "./package/promise";
-
-//
 export * from "./package/list";
 export * from "./package/proxy";
 //
@@ -14,3 +10,4 @@ export * from "./package/string";
 export * from "./package/timer";
 export * from "./package/regExp";
 export * from "./package/number";
+export * from "./package/browser";

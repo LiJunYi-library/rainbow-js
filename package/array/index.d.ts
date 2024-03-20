@@ -76,3 +76,28 @@ export declare function arraySortByList<T, H>(
 ): T[];
 
 export declare function arrayRandom<T>(list: T[]): T[];
+
+
+export declare function arrayInvokeFuns<T>(list: T[], ...arg: any): void;
+
+export declare function arrayInvokeFuns<T>(
+  list: T[],
+  formatter: (item: T) => unknown,
+  ...arg: any
+): void;
+
+// 模仿sql查询  //
+export declare function WHERE(compare: any, val: any): boolean;
+
+export declare function NOT(compare: any, val: any): boolean;
+
+export declare function LIKE(
+  compare: string | RegExp,
+  val: any,
+  flags?: string | undefined
+): boolean;
+
+export declare function IN(compare: any[], val: any): boolean;
+
+export declare function BETWEEN(compare: any[], val: any): boolean;
+export declare function BETWEEN(min: any, max: any, val: any): boolean;

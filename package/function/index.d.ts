@@ -1,11 +1,11 @@
-declare type Overload = {
-  addimpl: {
-    (fun: Function): any;
-    (type: string, fun: Function): any;
-    (type: string[], fun: Function): any;
-  };
+declare type Addimpl = {
+  (fun: () => void): any;
+  (type: string, fun: (arg: any) => void): any;
+  (type: string[], fun: (...arg: any) => void): any;
 };
 
-declare type OverloadCB = (overload: Overload) => void;
+declare type OverloadCB = (addimpl: Addimpl) => void;
 
-export declare function createOverload(overloadCB: OverloadCB): Function;
+export declare function createOverload(overloadCB: OverloadCB): void;
+
+export declare function isFunction(val: any): boolean;
