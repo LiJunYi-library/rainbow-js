@@ -189,7 +189,13 @@ export function arrayExtractSame(list = [], formatter) {
   return arr.flat();
 }
 
-// 数组排序 根据另一个数组的属性
+/**
+ * 数组排序 根据另一个数组的属性
+ * @param {*} list
+ * @param {*} arr
+ * @param {*} formatter
+ * @returns
+ */
 export function arraySortByList(list, arr, formatter) {
   list.forEach((item) => {
     const sortIndex = arr.findIndex((ele) => formatter(item, ele));
@@ -239,5 +245,9 @@ export function arrayEvents() {
     arrayInvokeFuns(events, ...args);
   }
 
-  return { events, push, remove, invoke };
+  function invokes(fun) {
+    events.forEach(fun);
+  }
+
+  return { events, push, remove, invoke, invokes };
 }

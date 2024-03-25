@@ -1,4 +1,4 @@
-import { imgParseBlob } from "../utils";
+import { imgParseBlob } from "../img";
 
 export function downloadFile(blob, fileName) {
   const elink = document.createElement("a");

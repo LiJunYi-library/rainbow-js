@@ -1,6 +1,6 @@
 import { mergeEvent } from "../promise";
-export * from './utils'
-export * from './download'
+export * from "./download";
+export * from "./img";
 
 export function r_resizeObserver(htmlNode, callBack, props = {}) {
   const { isOnce = false, isMerge = false, mergeTime = 60 } = props;
@@ -23,4 +23,3 @@ export function r_onceResizeObserver(htmlNode, callBack, props = {}) {
 export function r_mergeResizeObserver(htmlNode, callBack, props = {}) {
   return r_resizeObserver(htmlNode, callBack, { isMerge: true, ...props });
 }
-

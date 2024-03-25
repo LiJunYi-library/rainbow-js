@@ -85,10 +85,12 @@ export declare function arrayInvokeFuns<T>(
   ...arg: unknown[]
 ): void;
 
-export declare function arrayEvents(): {
+export declare function arrayEvents<T>(): {
+  events: T[];
   push: (eventCB: void) => void;
   remove: (eventCB: void) => void;
   invoke: (...arg: unknown[]) => void;
+  invokes: (callbackfn: (value: T, index: number, array: T[]) => void) => void;
 };
 
 // 模仿sql查询  //
