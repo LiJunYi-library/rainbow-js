@@ -221,11 +221,15 @@ export function arrayRandom(list) {
 // 触发数组方法
 export function arrayInvokeFuns(...args) {
   const [list, formatter, ...arg] = args;
+  let funArgs = [formatter, ...arg];
   let fmt = (item) => item;
-  if (formatter instanceof Function) fmt = formatter;
+  if (formatter instanceof Function) {
+    fmt = formatter;
+    funArgs = [...arg];
+  }
   list.forEach((item) => {
     const fun = fmt(item);
-    fun(...arg);
+    fun(...funArgs);
   });
 }
 
