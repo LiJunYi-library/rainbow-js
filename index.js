@@ -11,3 +11,4 @@ export * from "./package/timer";
 export * from "./package/regExp";
 export * from "./package/number";
 export * from "./package/browser";
+export * from "./package/color";
