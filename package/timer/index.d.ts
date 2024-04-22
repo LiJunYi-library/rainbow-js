@@ -19,3 +19,10 @@ export declare function timerThrottle(
   callback: Function,
   delay?: number
 ): Function;
+
+export declare function timeRefush(props: {
+  formatterTime?: (date: Date) => any;
+  onChange?: (time: any) => undefined;
+  once?: boolean;
+  ms?: number;
+}): void;

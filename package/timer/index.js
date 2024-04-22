@@ -32,3 +32,22 @@ export function timerThrottle(callback, delay = 500) {
   };
 }
 
+export function timeRefush(props = {}) {
+  const config = {
+    formatterTime: (date) => date.getDate(),
+    onChange: () => undefined,
+    once: false,
+    ms: 1000,
+    ...props,
+  };
+  let prveTime = config.formatterTime(new Date());
+  const timer = setInterval(() => {
+    const date = new Date();
+    const time = config.formatterTime(date);
+    if (prveTime !== time) {
+      config.onChange(time);
+      if (config.once) clearInterval(timer);
+    }
+    prveTime = time;
+  }, config.ms);
+}

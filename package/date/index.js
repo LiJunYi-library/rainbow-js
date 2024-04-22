@@ -22,7 +22,7 @@ DATE.prototype.isLeapYear = isLeapYear;
 
 DATE.prototype.getMaxDayOfMonth = function (month) {
   const years = isLeapYear(this.getFullYear()) ? year29 : year28;
-  let m = month || this.getMonth();
+  const m = month || this.getMonth();
   return years[m];
 };
 
@@ -247,7 +247,7 @@ DATE.formatterDate = function (
 ) {
   const date = new DATE();
   if (!stringTime) return date;
-  let timeObj = {
+  const timeObj = {
     Year: date.getFullYear(),
     Date: date.getDate(),
     Hours: date.getHours(),
@@ -258,7 +258,7 @@ DATE.formatterDate = function (
     Week: null,
     Month: date.getMonth(),
   };
-  let regExp = [
+  const regExp = [
     { format: "y", type: "Year", def: 0 },
     { format: "m", type: "Month", def: 0 },
     { format: "d", type: "Date", def: 1 },
@@ -279,7 +279,7 @@ DATE.formatterDate = function (
       nth++;
     }
     if (arr.length && regExp.some((v) => v.format === str)) {
-      let reg = regExp.find((v) => v.format === str);
+      const reg = regExp.find((v) => v.format === str);
       current.type = reg.type;
       current.def = reg.def;
     }
@@ -297,7 +297,7 @@ DATE.formatterDate = function (
     }
   }
   // console.log(timeObj.Date);
-  let maxDate = date.getMaxDayOfMonth(timeObj.Month);
+  const maxDate = date.getMaxDayOfMonth(timeObj.Month);
   if (timeObj.Date > maxDate) timeObj.Date = maxDate;
   // console.log(timeObj);
   for (const key in timeObj) {
@@ -305,7 +305,9 @@ DATE.formatterDate = function (
       try {
         // console.log('date set' + key, timeObj[key]);
         date["set" + key](timeObj[key]);
-      } catch (error) {}
+      } catch (error) {
+        //
+      }
     }
   }
   return date;
@@ -325,31 +327,31 @@ DATE.prototype.setWeek = function (num) {
   this.setStart();
   // console.log('重置', this.formatter());
   // console.log('重置', this.getChineseDay());
-  let day = this.getChineseDay();
+  const day = this.getChineseDay();
   let repairDay = 7 - day;
   if (day === 1) repairDay = 0;
-  let time = this.getTime();
-  let weekTime = num * 7 * 24 * 60 * 60 * 1000;
-  let t = time + weekTime;
+  const time = this.getTime();
+  const weekTime = num * 7 * 24 * 60 * 60 * 1000;
+  const t = time + weekTime;
   this.setTime(t);
   return this;
 };
 
 // TODO 各框架算法不同
 DATE.prototype.getWeek = function () {
-  let ct = this.getTime();
-  let cy = this.getFullYear();
+  const ct = this.getTime();
+  const cy = this.getFullYear();
 
-  let da = new DATE();
+  const da = new DATE();
   da.setFullYear(cy);
   da.setStart();
-  let tt = da.getTime();
-  let day = da.getChineseDay();
+  const tt = da.getTime();
+  const day = da.getChineseDay();
   let repairDay = 7 - day;
   if (day === 1) repairDay = 0;
-  let repairT = repairDay * 24 * 60 * 60 * 1000;
+  const repairT = repairDay * 24 * 60 * 60 * 1000;
 
-  let nth = Math.abs(ct - tt) / 1000 / 60 / 60 / 24 / 7;
+  const nth = Math.abs(ct - tt) / 1000 / 60 / 60 / 24 / 7;
   return Math.floor(nth);
 };
 
@@ -390,9 +392,9 @@ DATE.formatTime = function formatTime(
     },
   };
   const timeStr = format.replace(/{(y|m|d|h|i|s|a|c|w)+}/g, (result, key) => {
-    let fun = formatObj[`set${key}`];
+    const fun = formatObj[`set${key}`];
     if (fun) fun();
-    let val = formatObj[key];
+    const val = formatObj[key];
     return val || 0;
   });
   return timeStr;
