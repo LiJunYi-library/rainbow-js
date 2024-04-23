@@ -9,6 +9,6 @@ declare type OverloadCB = (addimpl: Addimpl) => void;
 export declare function createOverload(
   overloadCB: OverloadCB,
   verifyObjectType = true
-): void;
+): (...arg: any) => any;
 
 export declare function isFunction(val: any): boolean;
