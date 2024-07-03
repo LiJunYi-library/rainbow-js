@@ -8,9 +8,7 @@ export function transitionColor(defColor, color) {
     };
   }
   const rgb = (...args) => rgba(...args);
-  // eslint-disable-next-line no-eval
   const defColors = eval(defColor);
-  // eslint-disable-next-line no-eval
   const colors = eval(color);
 
   const gaps = {
@@ -21,7 +19,6 @@ export function transitionColor(defColor, color) {
   };
 
   return (ratio) => {
-    // eslint-disable-next-line no-param-reassign
     if (ratio > 1) ratio = 1;
     const rgbaColor = {
       r: gaps.r * ratio + defColors.r,

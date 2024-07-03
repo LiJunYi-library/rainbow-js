@@ -9,8 +9,18 @@ export function timerDebounced(callback, delay = 500) {
   return function fun(...arg) {
     clearTimeout(timeout);
     timeout = setTimeout(() => {
-      callback.call(this, ...arg);
+      callback(...arg);
     }, delay);
+  };
+}
+
+export function animationDebounced(callback) {
+  let id;
+  return function fun(...arg) {
+    cancelAnimationFrame(id);
+    id = requestAnimationFrame((time) => {
+      callback(...arg);
+    });
   };
 }
 
@@ -25,13 +35,15 @@ export function timerThrottle(callback, delay = 500) {
   return function throttledCallback(...args) {
     if (isThrottled) return;
     isThrottled = true;
-    callback.call(this, ...args);
+    callback(...args);
     setTimeout(() => {
       isThrottled = false;
     }, delay);
   };
 }
-
+/***
+ *
+ */
 export function timeRefush(props = {}) {
   const config = {
     formatterTime: (date) => date.getDate(),

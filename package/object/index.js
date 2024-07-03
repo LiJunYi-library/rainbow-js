@@ -18,15 +18,4 @@ export function objectIsEmpty(object) {
   return !Object.keys(object).length;
 }
 
-export class OBJECT extends Object {
-  constructor(...props) {
-    super(...props);
-  }
-  filter(regExp, isDelete) {
-    return objectFilter(this, regExp, isDelete);
-  }
 
-  isEmpty() {
-    return objectIsEmpty(this);
-  }
-}

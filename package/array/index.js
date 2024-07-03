@@ -24,6 +24,17 @@ const testArr = [
 
 export * from "./sql";
 
+if (!Array.prototype.at) {
+  Array.prototype.at = function (...arg) {
+    return arrayAt(this, ...arg);
+  };
+}
+
+export function arrayAt(list, index) {
+  let nth = index < 0 ? list.length + index : index;
+  return list[nth];
+}
+
 //循环
 export function arrayLoop(num, cb) {
   for (let index = 0; index < num; index++) {
@@ -91,27 +102,23 @@ export function arrayBubbleLastMax(list = [], formatter) {
     (value, item, index, list) => formatter(item, index, list) >= value
   );
 }
-
 // 删除数组中的第n个 改变数组
 export function arrayRemoveIndex(list = [], num) {
   list.splice(num, 1);
   return list;
 }
-
 // 删除数组中第一个找到的item 不改变数组
 export function arrayRemove(list = [], item) {
   const index = list.findIndex((el) => el === item);
   if (~index) list.splice(index, 1);
   return list;
 }
-
 // 删除数组中最后一个找到的item  不改变数组
 export function arrayRemoveLast(list = [], item) {
   const index = list.findLastIndex((el) => el === item);
   if (~index) list.splice(index, 1);
   return list;
 }
-
 // 删除数组中的所有 相同的 item 改变数组
 export function arrayRemoves(list = [], item) {
   const sames = list.filter((el) => el === item);
@@ -120,7 +127,6 @@ export function arrayRemoves(list = [], item) {
   });
   return list;
 }
-
 // 切割数组的index
 export function arraySplitIndex(list = [], num) {
   const arr = [];
@@ -134,7 +140,6 @@ export function arraySplitIndex(list = [], num) {
   }
   return arr;
 }
-
 // 切割数组
 export function arraySplit(list = [], num) {
   const arr = [];
@@ -145,7 +150,6 @@ export function arraySplit(list = [], num) {
   }
   return arr;
 }
-
 // 数组 根据某个属性 去重
 export function arrayWipeRepetition(list = [], formatter) {
   if (!formatter) return [...new Set(list)];
@@ -156,7 +160,6 @@ export function arrayWipeRepetition(list = [], formatter) {
       map.set(formatter(item, index).toString())
   );
 }
-
 // 数组 根据某个属性 去重 从后面
 export function arrayWipeRepetitionLast(list = [], formatter) {
   if (!formatter) return [...new Set(list)];
@@ -171,7 +174,6 @@ export function arrayWipeRepetitionLast(list = [], formatter) {
   }
   return arr;
 }
-
 // 数组提取相同
 export function arrayExtractSame(list = [], formatter) {
   const map = {};
@@ -188,7 +190,6 @@ export function arrayExtractSame(list = [], formatter) {
   }
   return arr.flat();
 }
-
 /**
  * 数组排序 根据另一个数组的属性
  * @param {*} list
@@ -206,7 +207,6 @@ export function arraySortByList(list, arr, formatter) {
   });
   return list;
 }
-
 // 数组打乱
 export function arrayRandom(list) {
   const length = list.length;
@@ -217,7 +217,6 @@ export function arrayRandom(list) {
   }
   return list;
 }
-
 // 触发数组方法
 export function arrayInvokeFuns(...args) {
   const [list, formatter, ...arg] = args;
@@ -232,7 +231,6 @@ export function arrayInvokeFuns(...args) {
     fun(...funArgs);
   });
 }
-
 /* 事件派发 */
 export function arrayEvents() {
   const events = [];
@@ -255,3 +253,22 @@ export function arrayEvents() {
 
   return { events, push, remove, invoke, invokes };
 }
+
+export function arrayBinaryFind(list, value) {
+  let start = 0;
+  let end = list.length - 1;
+
+  while (start <= end) {
+    let index = Math.floor((start + end) / 2);
+    if (list[index] === value) {
+      return index;
+    } else if (list[index] < value) {
+      start = index + 1;
+    } else {
+      end = index - 1;
+    }
+  }
+
+  return -1;
+}
+

@@ -51,7 +51,7 @@ export declare function arraySplit<T>(list: T[], num: number): T[][];
 
 export declare function arrayWipeRepetition<T>(
   list: T[],
-  formatter: (item: T, index: number) => unknown
+  formatter?: (item: T, index: number) => unknown
 ): T[];
 
 export declare function arrayWipeRepetitionLast<T>(

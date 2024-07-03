@@ -1,4 +1,3 @@
-export * from "./diatory";
 import { arrayRemove } from "../array";
 
 export function useQueue(props = {}) {

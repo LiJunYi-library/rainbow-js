@@ -1,5 +1,3 @@
-export * from "./diatory";
-
 export declare function useQueue<T = any>(
   props: {
     onBegin: (queue: T[], current: T) => void;
